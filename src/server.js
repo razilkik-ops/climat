@@ -82,12 +82,12 @@ app.use((error, req, res, next) => {
 });
 
 const port = Number(process.env.PORT || 3000);
-const server = app.listen(port, () => {
-  console.log(`Minsk Climate is running on http://localhost:${port}`);
+const host = process.env.HOST || '0.0.0.0';
+const server = app.listen(port, host, () => {
+  console.log(`Minsk Climate is running on http://${host}:${port}`);
 });
 
 process.on('SIGINT', async () => {
   await prisma.$disconnect();
   server.close(() => process.exit(0));
 });
-
