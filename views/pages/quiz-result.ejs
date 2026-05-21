@@ -1,0 +1,21 @@
+<section class="page-title">
+  <p class="eyebrow">Результат</p>
+  <h1>Ориентир проекта: <%= money(budget.rangeFrom) %> – <%= money(budget.rangeTo) %></h1>
+  <p>Рекомендуемая мощность: <strong><%= budget.recommendedPower %> кВт</strong>. Финальная смета зависит от трассы, доступа к фасаду и дренажа.</p>
+</section>
+
+<section class="section two-column">
+  <div class="summary-box">
+    <div><span>Оборудование</span><strong><%= money(budget.equipment) %></strong></div>
+    <div><span>Монтаж и материалы</span><strong><%= money(budget.install) %></strong></div>
+    <div><span>Опции</span><strong><%= money(budget.options) %></strong></div>
+  </div>
+  <div>
+    <% if (recommendedProduct) { %>
+      <%- include('../partials/product-card', { product: recommendedProduct }) %>
+    <% } else { %>
+      <div class="empty-state"><h2>Нужна ручная консультация</h2><p>Для вашего сценария лучше проверить помещение до рекомендации.</p></div>
+    <% } %>
+  </div>
+</section>
+

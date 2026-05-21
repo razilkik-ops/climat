@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  MEASURED
+  QUOTED
+  WON
+  LOST
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+enum PaymentStatus {
+  INITIATED
+  SUCCEEDED
+  FAILED
+}
+
+model Brand {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  slug      String    @unique
+  country   String
+  products  Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Product {
+  id             Int      @id @default(autoincrement())
+  title          String
+  slug           String   @unique
+  type           String
+  roomArea       Int
+  coolingPower   Float
+  energyClass    String
+  noiseLevel     Int
+  inverter       Boolean  @default(true)
+  wifi           Boolean  @default(false)
+  price          Int
+  installPrice   Int
+  rating         Float    @default(4.8)
+  stock          Int      @default(0)
+  badge          String?
+  description    String
+  features       Json
+  image          String
+  brandId        Int
+  brand          Brand    @relation(fields: [brandId], references: [id])
+  orderItems     OrderItem[]
+  quizMatches    QuizSubmission[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Lead {
+  id            Int        @id @default(autoincrement())
+  name          String
+  phone         String
+  city          String     @default("Минск")
+  objectType    String?
+  roomArea      Int?
+  budget        String?
+  preferredDate String?
+  source        String     @default("site")
+  status        LeadStatus @default(NEW)
+  notes         String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model QuizSubmission {
+  id                   Int      @id @default(autoincrement())
+  name                 String?
+  phone                String?
+  answers              Json
+  calculatedBudget     Int
+  recommendedProductId Int?
+  recommendedProduct   Product? @relation(fields: [recommendedProductId], references: [id])
+  createdAt            DateTime @default(now())
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  customer    String
+  phone       String
+  email       String?
+  address     String?
+  total       Int
+  status      OrderStatus @default(PENDING)
+  items       OrderItem[]
+  payments    Payment[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int     @default(1)
+  price     Int
+  install   Boolean @default(true)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Payment {
+  id        Int           @id @default(autoincrement())
+  orderId   Int
+  provider  String        @default("demo")
+  amount    Int
+  status    PaymentStatus @default(INITIATED)
+  reference String        @unique
+  order     Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+}
+

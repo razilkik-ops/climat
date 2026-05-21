@@ -1,0 +1,40 @@
+<section class="page-title">
+  <p class="eyebrow">Сравнение</p>
+  <h1>Сравните шум, площадь, цену и монтаж</h1>
+  <p>Добавляйте модели из каталога. В таблице удобно увидеть, где переплата действительно дает смысл.</p>
+</section>
+
+<section class="section">
+  <% if (products.length) { %>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Параметр</th>
+            <% products.forEach((product) => { %><th><%= product.title %></th><% }) %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Бренд</td><% products.forEach((product) => { %><td><%= product.brand.name %></td><% }) %></tr>
+          <tr><td>Цена</td><% products.forEach((product) => { %><td><%= money(product.price) %></td><% }) %></tr>
+          <tr><td>Монтаж</td><% products.forEach((product) => { %><td><%= money(product.installPrice) %></td><% }) %></tr>
+          <tr><td>Площадь</td><% products.forEach((product) => { %><td>до <%= product.roomArea %> м²</td><% }) %></tr>
+          <tr><td>Шум</td><% products.forEach((product) => { %><td><%= product.noiseLevel %> дБ</td><% }) %></tr>
+          <tr><td>Wi-Fi</td><% products.forEach((product) => { %><td><%= product.wifi ? 'есть' : 'опция' %></td><% }) %></tr>
+          <tr><td></td><% products.forEach((product) => { %><td><a class="button button-dark" href="/product/<%= product.slug %>">Открыть</a></td><% }) %></tr>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <div class="empty-state">
+      <h2>Список сравнения пока пуст</h2>
+      <p>Нажмите кнопку сравнения в карточках каталога. Для старта можно открыть одну из популярных моделей ниже.</p>
+    </div>
+  <% } %>
+  <div class="catalog-grid">
+    <% suggestions.forEach((product) => { %>
+      <%- include('../partials/product-card', { product }) %>
+    <% }) %>
+  </div>
+</section>
+

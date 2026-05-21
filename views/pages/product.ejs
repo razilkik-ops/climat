@@ -1,0 +1,54 @@
+<section class="product-page">
+  <div class="product-visual reveal">
+    <img src="<%= product.image %>" alt="<%= product.title %>">
+  </div>
+  <div class="product-info reveal">
+    <p class="eyebrow"><%= product.brand.name %> · <%= product.brand.country %></p>
+    <h1><%= product.title %></h1>
+    <p><%= product.description %></p>
+    <div class="price-line">
+      <strong><%= money(product.price) %></strong>
+      <span>монтаж от <%= money(product.installPrice) %></span>
+    </div>
+    <div class="spec-grid">
+      <div><span>Площадь</span><strong>до <%= product.roomArea %> м²</strong></div>
+      <div><span>Мощность</span><strong><%= product.coolingPower %> кВт</strong></div>
+      <div><span>Шум</span><strong><%= product.noiseLevel %> дБ</strong></div>
+      <div><span>Класс</span><strong><%= product.energyClass %></strong></div>
+    </div>
+    <div class="feature-list">
+      <% product.features.forEach((feature) => { %><span><%= feature %></span><% }) %>
+    </div>
+    <div class="hero-actions">
+      <a class="button button-dark" href="/checkout?product=<%= product.slug %>">Купить с монтажом</a>
+      <button class="button button-outline compare-toggle" type="button" data-compare-id="<%= product.id %>">В сравнение</button>
+    </div>
+  </div>
+</section>
+
+<section class="section quote-band">
+  <div>
+    <p class="eyebrow">Проверка перед покупкой</p>
+    <h2>Уточним трассу, дренаж и место блока до оплаты монтажа</h2>
+  </div>
+  <form action="/api/leads" method="post" class="lead-form">
+    <input type="hidden" name="source" value="product">
+    <input type="hidden" name="notes" value="Интерес к <%= product.title %>">
+    <label>Имя<input name="name" required></label>
+    <label>Телефон<input name="phone" required></label>
+    <button class="button button-light" type="submit">Заказать консультацию</button>
+  </form>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>Похожие модели</h2>
+    <a class="button button-outline" href="/catalog">Каталог</a>
+  </div>
+  <div class="catalog-grid">
+    <% related.forEach((product) => { %>
+      <%- include('../partials/product-card', { product }) %>
+    <% }) %>
+  </div>
+</section>
+

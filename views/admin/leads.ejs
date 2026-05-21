@@ -1,0 +1,34 @@
+<section class="admin-shell">
+  <%- include('nav') %>
+  <div class="admin-content">
+    <div class="section-head">
+      <div><p class="eyebrow">CRM</p><h1>Заявки</h1></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Клиент</th><th>Телефон</th><th>Объект</th><th>Бюджет</th><th>Статус</th><th>Комментарий</th></tr></thead>
+        <tbody>
+          <% leads.forEach((lead) => { %>
+            <tr>
+              <td><%= lead.name %><br><small><%= lead.createdAt.toLocaleString('ru-RU') %></small></td>
+              <td><%= lead.phone %></td>
+              <td><%= lead.objectType || '—' %> <%= lead.roomArea ? `${lead.roomArea} м²` : '' %></td>
+              <td><%= lead.budget || '—' %></td>
+              <td>
+                <form action="/admin/leads/<%= lead.id %>/status?_method=PATCH" method="post">
+                  <select name="status" onchange="this.form.submit()">
+                    <% ['NEW','CONTACTED','MEASURED','QUOTED','WON','LOST'].forEach((status) => { %>
+                      <option value="<%= status %>" <%= lead.status === status ? 'selected' : '' %>><%= leadStatusLabel(status) %></option>
+                    <% }) %>
+                  </select>
+                </form>
+              </td>
+              <td><%= lead.notes || '—' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+

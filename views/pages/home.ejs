@@ -1,0 +1,62 @@
+<section class="hero">
+  <div class="hero-media">
+    <img src="/img/hero-interior.jpg" alt="Современная квартира с аккуратно установленным кондиционером">
+  </div>
+  <div class="hero-content reveal">
+    <p class="eyebrow">Минск · подбор · монтаж · сервис</p>
+    <h1>Кондиционеры под ключ</h1>
+    <p>Подбираем модель под площадь, шум, бюджет и интерьер, привозим, монтируем чисто и остаемся на сервисе после установки.</p>
+    <div class="hero-actions">
+      <a class="button button-light" href="/quiz">Пройти подбор</a>
+      <a class="button button-ghost" href="/catalog">Открыть каталог</a>
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div><strong>7 лет</strong><span>монтажа в Минске</span></div>
+  <div><strong><%= productsCount %>+</strong><span>моделей в подборе</span></div>
+  <div><strong>2 года</strong><span>гарантия на работы</span></div>
+  <div><strong>24 ч</strong><span>быстрый расчет</span></div>
+</section>
+
+<section class="section two-column">
+  <div>
+    <p class="eyebrow">Не просто продать коробку</p>
+    <h2>Сначала считаем задачу, потом предлагаем модель</h2>
+  </div>
+  <div class="process-grid">
+    <div><span>01</span><strong>Площадь и теплопритоки</strong><p>Учитываем окна, этаж, солнечную сторону, технику и сценарии использования.</p></div>
+    <div><span>02</span><strong>Трасса и монтаж</strong><p>Проверяем маршрут, дренаж, доступ к фасаду и эстетику внутреннего блока.</p></div>
+    <div><span>03</span><strong>Смета без сюрпризов</strong><p>Разделяем оборудование, материалы, монтаж и опции до выезда бригады.</p></div>
+    <div><span>04</span><strong>Сервис после оплаты</strong><p>Фиксируем гарантию, напоминания о чистке и историю обращений в CRM.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Популярные решения</p>
+      <h2>Модели, которые чаще всего выбирают после консультации</h2>
+    </div>
+    <a class="button button-dark" href="/catalog">Все модели</a>
+  </div>
+  <div class="catalog-grid">
+    <% featured.forEach((product) => { %>
+      <%- include('../partials/product-card', { product }) %>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section quote-band">
+  <div>
+    <p class="eyebrow">Быстрый старт</p>
+    <h2>Получите подборку и ориентир по монтажу за 2 минуты</h2>
+  </div>
+  <form action="/api/leads" method="post" class="lead-form">
+    <input type="hidden" name="source" value="home">
+    <label>Имя<input name="name" placeholder="Ваше имя" required></label>
+    <label>Телефон<input name="phone" placeholder="+375..." required></label>
+    <button class="button button-light" type="submit">Получить расчет</button>
+  </form>
+</section>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title ? `${title} | Minsk Climate` : 'Minsk Climate' %></title>
+    <meta name="description" content="Продажа, подбор и установка кондиционеров под ключ в Минске. Каталог, квиз, расчет стоимости, гарантия и сервис.">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+    <%- include('partials/header') %>
+    <main>
+      <%- include(view) %>
+    </main>
+    <%- include('partials/footer') %>
+    <script src="/js/app.js" defer></script>
+  </body>
+</html>
+

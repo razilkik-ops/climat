@@ -1,0 +1,32 @@
+<section class="page-title">
+  <p class="eyebrow">Онлайн-оплата</p>
+  <h1>Оформление заказа с монтажом</h1>
+</section>
+
+<section class="checkout-grid">
+  <% if (product) { %>
+    <div class="checkout-product">
+      <img src="<%= product.image %>" alt="<%= product.title %>">
+      <div>
+        <p class="eyebrow"><%= product.brand.name %></p>
+        <h2><%= product.title %></h2>
+        <p><%= money(product.price) %> + монтаж от <%= money(product.installPrice) %></p>
+      </div>
+    </div>
+    <form action="/orders" method="post" class="smart-form">
+      <input type="hidden" name="productId" value="<%= product.id %>">
+      <label>Имя<input name="customer" required></label>
+      <label>Телефон<input name="phone" required></label>
+      <label>Email<input type="email" name="email"></label>
+      <label>Адрес монтажа<input name="address" placeholder="Минск, улица, дом"></label>
+      <label class="check"><input type="checkbox" name="install" checked> Добавить монтаж</label>
+      <button class="button button-dark" type="submit">Перейти к оплате</button>
+    </form>
+  <% } else { %>
+    <div class="empty-state">
+      <h2>Выберите модель в каталоге</h2>
+      <a class="button button-dark" href="/catalog">Открыть каталог</a>
+    </div>
+  <% } %>
+</section>
+

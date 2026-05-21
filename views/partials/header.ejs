@@ -1,0 +1,29 @@
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Minsk Climate">
+    <span class="brand-mark">MC</span>
+    <span>
+      <strong>Minsk Climate</strong>
+      <small>подбор и монтаж</small>
+    </span>
+  </a>
+  <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-label="Меню">
+    <span></span>
+    <span></span>
+  </button>
+  <nav class="main-nav" data-menu>
+    <a href="/catalog" class="<%= currentPath.startsWith('/catalog') ? 'active' : '' %>">Каталог</a>
+    <a href="/quiz" class="<%= currentPath.startsWith('/quiz') ? 'active' : '' %>">Подбор</a>
+    <a href="/calculator" class="<%= currentPath.startsWith('/calculator') ? 'active' : '' %>">Калькулятор</a>
+    <a href="/installation" class="<%= currentPath.startsWith('/installation') ? 'active' : '' %>">Монтаж</a>
+    <a href="/warranty" class="<%= currentPath.startsWith('/warranty') ? 'active' : '' %>">Гарантия</a>
+    <a href="/compare" class="<%= currentPath.startsWith('/compare') ? 'active' : '' %>">Сравнение</a>
+    <% if (admin) { %>
+      <a href="/admin">CRM</a>
+    <% } %>
+  </nav>
+  <div class="header-actions">
+    <a class="phone" href="tel:+375291234567">+375 29 123-45-67</a>
+    <a class="button button-dark" href="/quiz">Подобрать</a>
+  </div>
+</header>
+

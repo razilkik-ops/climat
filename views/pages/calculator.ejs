@@ -1,0 +1,27 @@
+<section class="page-title">
+  <p class="eyebrow">Калькулятор</p>
+  <h1>Быстрый расчет оборудования и монтажа</h1>
+</section>
+
+<section class="calculator-grid">
+  <form class="smart-form" data-calculator>
+    <label>Площадь, м²<input type="number" name="area" value="25" min="10" max="120"></label>
+    <label>Длина трассы, м<input type="number" name="routeLength" value="3" min="3" max="25"></label>
+    <label>Количество отверстий<input type="number" name="drilling" value="1" min="0" max="4"></label>
+    <label>Класс оборудования
+      <select name="tier">
+        <option value="balanced">Сбалансированный</option>
+        <option value="economy">Экономичный</option>
+        <option value="premium">Премиум</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" name="wifi"> Wi-Fi модуль</label>
+    <label class="check"><input type="checkbox" name="highFloor"> Высотные работы</label>
+  </form>
+  <div class="calc-result" data-calc-result>
+    <span>Итого ориентировочно</span>
+    <strong>0 BYN</strong>
+    <p>Измените параметры, расчет обновится автоматически.</p>
+  </div>
+</section>
+

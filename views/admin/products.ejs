@@ -1,0 +1,25 @@
+<section class="admin-shell">
+  <%- include('nav') %>
+  <div class="admin-content">
+    <div class="section-head">
+      <div><p class="eyebrow">Админка</p><h1>Товары</h1></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Модель</th><th>Бренд</th><th>Площадь</th><th>Цена</th><th>Остаток</th></tr></thead>
+        <tbody>
+          <% products.forEach((product) => { %>
+            <tr>
+              <td><a href="/product/<%= product.slug %>"><%= product.title %></a></td>
+              <td><%= product.brand.name %></td>
+              <td><%= product.roomArea %> м²</td>
+              <td><%= money(product.price) %></td>
+              <td><%= product.stock %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+

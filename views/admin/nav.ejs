@@ -1,0 +1,8 @@
+<aside class="admin-nav">
+  <a href="/admin" class="<%= currentPath === '/admin' ? 'active' : '' %>">Обзор</a>
+  <a href="/admin/leads" class="<%= currentPath.startsWith('/admin/leads') ? 'active' : '' %>">Заявки</a>
+  <a href="/admin/orders" class="<%= currentPath.startsWith('/admin/orders') ? 'active' : '' %>">Заказы</a>
+  <a href="/admin/products" class="<%= currentPath.startsWith('/admin/products') ? 'active' : '' %>">Товары</a>
+  <a href="/" target="_blank">Сайт</a>
+</aside>
+

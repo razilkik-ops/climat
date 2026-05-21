@@ -1,0 +1,42 @@
+<section class="admin-shell">
+  <%- include('nav') %>
+  <div class="admin-content">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">CRM</p>
+        <h1>Панель управления</h1>
+      </div>
+      <form action="/admin/logout" method="post"><button class="button button-outline" type="submit">Выйти</button></form>
+    </div>
+    <div class="admin-stats">
+      <div><span>Заявки</span><strong><%= stats.leadsCount %></strong></div>
+      <div><span>Новые</span><strong><%= stats.newLeads %></strong></div>
+      <div><span>Заказы</span><strong><%= stats.ordersCount %></strong></div>
+      <div><span>Оплачены</span><strong><%= stats.paidOrders %></strong></div>
+      <div><span>Товары</span><strong><%= stats.productsCount %></strong></div>
+    </div>
+    <div class="admin-columns">
+      <section class="admin-panel">
+        <h2>Свежие заявки</h2>
+        <% recentLeads.forEach((lead) => { %>
+          <div class="crm-row">
+            <strong><%= lead.name %></strong>
+            <span><%= lead.phone %></span>
+            <em><%= leadStatusLabel(lead.status) %></em>
+          </div>
+        <% }) %>
+      </section>
+      <section class="admin-panel">
+        <h2>Заказы</h2>
+        <% recentOrders.forEach((order) => { %>
+          <div class="crm-row">
+            <strong>#<%= order.id %> · <%= order.customer %></strong>
+            <span><%= money(order.total) %></span>
+            <em><%= orderStatusLabel(order.status) %></em>
+          </div>
+        <% }) %>
+      </section>
+    </div>
+  </div>
+</section>
+

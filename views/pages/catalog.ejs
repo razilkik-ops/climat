@@ -1,0 +1,63 @@
+<section class="page-title">
+  <p class="eyebrow">Каталог</p>
+  <h1>Кондиционеры с понятным подбором</h1>
+  <p>Фильтруйте по бренду, площади, цене и функциям. До 4 моделей можно отправить в сравнение.</p>
+</section>
+
+<section class="catalog-layout">
+  <aside class="filters">
+    <form method="get" action="/catalog">
+      <label>Бренд
+        <select name="brand">
+          <option value="">Все бренды</option>
+          <% brands.forEach((brand) => { %>
+            <option value="<%= brand.slug %>" <%= query.brand === brand.slug ? 'selected' : '' %>><%= brand.name %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Тип
+        <select name="type">
+          <option value="">Все типы</option>
+          <option value="split" <%= query.type === 'split' ? 'selected' : '' %>>Сплит</option>
+          <option value="designer" <%= query.type === 'designer' ? 'selected' : '' %>>Дизайнерские</option>
+          <option value="commercial" <%= query.type === 'commercial' ? 'selected' : '' %>>Офисные</option>
+        </select>
+      </label>
+      <label>Площадь от, м²<input type="number" name="area" value="<%= query.area || '' %>" min="10" max="120"></label>
+      <label>Цена от<input type="number" name="minPrice" value="<%= query.minPrice || '' %>" min="0"></label>
+      <label>Цена до<input type="number" name="maxPrice" value="<%= query.maxPrice || '' %>" min="0"></label>
+      <label>Сортировка
+        <select name="sort">
+          <option value="rating" <%= query.sort === 'rating' ? 'selected' : '' %>>По рейтингу</option>
+          <option value="price_asc" <%= query.sort === 'price_asc' ? 'selected' : '' %>>Сначала дешевле</option>
+          <option value="price_desc" <%= query.sort === 'price_desc' ? 'selected' : '' %>>Сначала дороже</option>
+          <option value="area" <%= query.sort === 'area' ? 'selected' : '' %>>По площади</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" name="inverter" <%= query.inverter === 'on' ? 'checked' : '' %>> Инвертор</label>
+      <label class="check"><input type="checkbox" name="wifi" <%= query.wifi === 'on' ? 'checked' : '' %>> Wi-Fi</label>
+      <button class="button button-dark" type="submit">Применить</button>
+      <a class="reset-link" href="/catalog">Сбросить</a>
+    </form>
+  </aside>
+
+  <div>
+    <div class="catalog-tools">
+      <span>Найдено: <strong><%= products.length %></strong></span>
+      <a class="button button-outline" href="/compare" data-compare-link>Сравнить выбранные</a>
+    </div>
+    <div class="catalog-grid">
+      <% products.forEach((product) => { %>
+        <%- include('../partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+    <% if (!products.length) { %>
+      <div class="empty-state">
+        <h2>По фильтрам ничего не найдено</h2>
+        <p>Сбросьте часть параметров или оставьте заявку, и менеджер подберет альтернативы.</p>
+        <a class="button button-dark" href="/quiz">Подобрать через квиз</a>
+      </div>
+    <% } %>
+  </div>
+</section>
+

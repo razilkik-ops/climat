@@ -1,0 +1,20 @@
+<section class="page-title">
+  <p class="eyebrow">Платеж <%= payment.reference %></p>
+  <h1><%= payment.status === 'SUCCEEDED' ? 'Заказ оплачен' : 'Демо-оплата заказа' %></h1>
+  <p>В проекте уже есть модель платежей. Этот экран имитирует успешный платеж, чтобы позже подключить реальный эквайринг.</p>
+</section>
+
+<section class="form-shell">
+  <div class="summary-box">
+    <div><span>Клиент</span><strong><%= payment.order.customer %></strong></div>
+    <div><span>Телефон</span><strong><%= payment.order.phone %></strong></div>
+    <div><span>Сумма</span><strong><%= money(payment.amount) %></strong></div>
+    <div><span>Статус</span><strong><%= payment.status === 'SUCCEEDED' ? 'Оплачен' : 'Ожидает' %></strong></div>
+  </div>
+  <% if (payment.status !== 'SUCCEEDED') { %>
+    <form action="/payment/<%= payment.reference %>/pay" method="post">
+      <button class="button button-dark" type="submit">Оплатить демо-картой</button>
+    </form>
+  <% } %>
+</section>
+

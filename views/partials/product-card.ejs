@@ -1,0 +1,24 @@
+<article class="product-card reveal">
+  <a href="/product/<%= product.slug %>" class="product-media">
+    <% if (product.badge) { %><span class="badge"><%= product.badge %></span><% } %>
+    <img src="<%= product.image %>" alt="<%= product.title %>" loading="lazy">
+  </a>
+  <div class="product-body">
+    <div class="muted"><%= product.brand.name %> · до <%= product.roomArea %> м²</div>
+    <h3><a href="/product/<%= product.slug %>"><%= product.title %></a></h3>
+    <p><%= product.description %></p>
+    <div class="spec-row">
+      <span><%= product.coolingPower %> кВт</span>
+      <span><%= product.noiseLevel %> дБ</span>
+      <span><%= product.energyClass %></span>
+    </div>
+    <div class="product-bottom">
+      <div>
+        <strong><%= money(product.price) %></strong>
+        <small>монтаж от <%= money(product.installPrice) %></small>
+      </div>
+      <button class="icon-button compare-toggle" type="button" data-compare-id="<%= product.id %>" aria-label="Добавить к сравнению">⇄</button>
+    </div>
+  </div>
+</article>
+
