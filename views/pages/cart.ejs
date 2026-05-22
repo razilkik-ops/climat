@@ -1,0 +1,30 @@
+<section class="page-title compact-title">
+  <p class="eyebrow">Корзина</p>
+  <h1>Оформите заказ онлайн</h1>
+  <p>Проверьте товары, добавьте монтаж и оставьте контакты. Менеджер подтвердит наличие и время установки.</p>
+</section>
+
+<section class="cart-layout">
+  <div class="cart-panel">
+    <div class="cart-empty" data-cart-empty>
+      <h2>Корзина пока пустая</h2>
+      <p>Добавьте кондиционер из каталога, чтобы оформить заказ.</p>
+      <a class="button button-primary" href="/catalog">Перейти в каталог</a>
+    </div>
+    <div class="cart-items" data-cart-items></div>
+  </div>
+
+  <form action="/orders" method="post" class="smart-form checkout-card" data-cart-form>
+    <input type="hidden" name="cartItems" data-cart-payload>
+    <h2>Данные покупателя</h2>
+    <label>Имя<input name="customer" required></label>
+    <label>Телефон<input name="phone" required></label>
+    <label>Email<input type="email" name="email"></label>
+    <label>Адрес монтажа<input name="address" placeholder="Минск, улица, дом"></label>
+    <div class="cart-total">
+      <span>Итого</span>
+      <strong data-cart-total>0 BYN</strong>
+    </div>
+    <button class="button button-primary" type="submit">Перейти к оплате <span>→</span></button>
+  </form>
+</section>

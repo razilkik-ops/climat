@@ -23,6 +23,25 @@ function parseIds(value) {
   return raw.split(',').map((item) => Number(item)).filter(Boolean).slice(0, 4);
 }
 
+function parseCartItems(value) {
+  if (!value) return [];
+
+  try {
+    const items = JSON.parse(value);
+    if (!Array.isArray(items)) return [];
+
+    return items
+      .map((item) => ({
+        id: Number(item.id),
+        quantity: Math.min(Math.max(Number(item.quantity) || 1, 1), 20),
+        install: item.install !== false
+      }))
+      .filter((item) => item.id);
+  } catch {
+    return [];
+  }
+}
+
 router.get('/', async (req, res, next) => {
   try {
     const [featured, brands, productsCount] = await Promise.all([
@@ -215,6 +234,13 @@ router.get('/calculator', (req, res) => {
   });
 });
 
+router.get('/cart', (req, res) => {
+  res.render('layout', {
+    view: 'pages/cart',
+    title: 'Корзина'
+  });
+});
+
 router.post('/api/calculate', (req, res) => {
   res.json(calculateProjectCost(req.body));
 });
@@ -273,14 +299,44 @@ router.get('/checkout', async (req, res, next) => {
 
 router.post('/orders', async (req, res, next) => {
   try {
-    const product = await prisma.product.findUnique({ where: { id: Number(req.body.productId) } });
-    if (!product) {
+    const cartItems = parseCartItems(req.body.cartItems);
+    const orderLines = [];
+
+    if (cartItems.length) {
+      const products = await prisma.product.findMany({
+        where: { id: { in: cartItems.map((item) => item.id) } }
+      });
+
+      for (const item of cartItems) {
+        const product = products.find((entry) => entry.id === item.id);
+        if (!product) continue;
+
+        orderLines.push({
+          product,
+          quantity: item.quantity,
+          install: item.install
+        });
+      }
+    } else {
+      const product = await prisma.product.findUnique({ where: { id: Number(req.body.productId) } });
+      if (product) {
+        orderLines.push({
+          product,
+          quantity: 1,
+          install: req.body.install === 'on'
+        });
+      }
+    }
+
+    if (!orderLines.length) {
       res.redirect('/catalog');
       return;
     }
 
-    const install = req.body.install === 'on';
-    const total = product.price + (install ? product.installPrice : 0);
+    const total = orderLines.reduce((sum, line) => (
+      sum + (line.product.price + (line.install ? line.product.installPrice : 0)) * line.quantity
+    ), 0);
+
     const order = await prisma.order.create({
       data: {
         customer: req.body.customer,
@@ -289,12 +345,12 @@ router.post('/orders', async (req, res, next) => {
         address: req.body.address || null,
         total,
         items: {
-          create: {
-            productId: product.id,
-            quantity: 1,
-            price: product.price,
-            install
-          }
+          create: orderLines.map((line) => ({
+            productId: line.product.id,
+            quantity: line.quantity,
+            price: line.product.price,
+            install: line.install
+          }))
         },
         payments: {
           create: {
@@ -313,7 +369,7 @@ router.post('/orders', async (req, res, next) => {
         objectType: 'Заказ',
         budget: `${total} BYN`,
         source: 'checkout',
-        notes: `Заказ #${order.id}: ${product.title}`
+        notes: `Заказ #${order.id}: ${orderLines.map((line) => `${line.product.title} x${line.quantity}`).join(', ')}`
       }
     });
 
@@ -375,4 +431,3 @@ router.get('/thanks', (req, res) => {
 });
 
 export default router;
-

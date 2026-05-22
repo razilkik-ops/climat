@@ -1,24 +1,30 @@
 <article class="product-card reveal">
+  <% if (product.badge) { %><span class="badge"><%= product.badge %></span><% } %>
   <a href="/product/<%= product.slug %>" class="product-media">
-    <% if (product.badge) { %><span class="badge"><%= product.badge %></span><% } %>
     <img src="<%= product.image %>" alt="<%= product.title %>" loading="lazy">
   </a>
   <div class="product-body">
-    <div class="muted"><%= product.brand.name %> · до <%= product.roomArea %> м²</div>
+    <a href="/product/<%= product.slug %>" class="muted"><%= product.brand.name %></a>
     <h3><a href="/product/<%= product.slug %>"><%= product.title %></a></h3>
-    <p><%= product.description %></p>
-    <div class="spec-row">
-      <span><%= product.coolingPower %> кВт</span>
-      <span><%= product.noiseLevel %> дБ</span>
-      <span><%= product.energyClass %></span>
-    </div>
+    <p>Площадь: до <%= product.roomArea %> м²</p>
     <div class="product-bottom">
-      <div>
-        <strong><%= money(product.price) %></strong>
-        <small>монтаж от <%= money(product.installPrice) %></small>
+      <strong><%= money(product.price) %></strong>
+      <div class="card-actions">
+        <button class="round-icon compare-toggle" type="button" data-compare-id="<%= product.id %>" aria-label="Добавить к сравнению">♡</button>
+        <button
+          class="round-icon cart-add"
+          type="button"
+          data-cart-add
+          data-id="<%= product.id %>"
+          data-title="<%= product.title %>"
+          data-slug="<%= product.slug %>"
+          data-price="<%= product.price %>"
+          data-install-price="<%= product.installPrice %>"
+          data-image="<%= product.image %>"
+          data-brand="<%= product.brand.name %>"
+          aria-label="Добавить в корзину"
+        >⌑</button>
       </div>
-      <button class="icon-button compare-toggle" type="button" data-compare-id="<%= product.id %>" aria-label="Добавить к сравнению">⇄</button>
     </div>
   </div>
 </article>
-

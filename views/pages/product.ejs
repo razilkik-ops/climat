@@ -20,7 +20,19 @@
       <% product.features.forEach((feature) => { %><span><%= feature %></span><% }) %>
     </div>
     <div class="hero-actions">
-      <a class="button button-dark" href="/checkout?product=<%= product.slug %>">Купить с монтажом</a>
+      <button
+        class="button button-primary"
+        type="button"
+        data-cart-add
+        data-id="<%= product.id %>"
+        data-title="<%= product.title %>"
+        data-slug="<%= product.slug %>"
+        data-price="<%= product.price %>"
+        data-install-price="<%= product.installPrice %>"
+        data-image="<%= product.image %>"
+        data-brand="<%= product.brand.name %>"
+      >Добавить в корзину <span>→</span></button>
+      <a class="button button-white" href="/checkout?product=<%= product.slug %>">Купить сейчас</a>
       <button class="button button-outline compare-toggle" type="button" data-compare-id="<%= product.id %>">В сравнение</button>
     </div>
   </div>
@@ -51,4 +63,3 @@
     <% }) %>
   </div>
 </section>
-

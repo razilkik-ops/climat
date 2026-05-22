@@ -1,6 +1,6 @@
-<section class="page-title">
-  <p class="eyebrow">Онлайн-оплата</p>
-  <h1>Оформление заказа с монтажом</h1>
+<section class="page-title compact-title">
+  <p class="eyebrow">Оформление</p>
+  <h1>Заказ с доставкой и монтажом</h1>
 </section>
 
 <section class="checkout-grid">
@@ -20,13 +20,15 @@
       <label>Email<input type="email" name="email"></label>
       <label>Адрес монтажа<input name="address" placeholder="Минск, улица, дом"></label>
       <label class="check"><input type="checkbox" name="install" checked> Добавить монтаж</label>
-      <button class="button button-dark" type="submit">Перейти к оплате</button>
+      <button class="button button-primary" type="submit">Перейти к оплате</button>
     </form>
   <% } else { %>
     <div class="empty-state">
-      <h2>Выберите модель в каталоге</h2>
-      <a class="button button-dark" href="/catalog">Открыть каталог</a>
+      <h2>Выберите модель в каталоге или перейдите в корзину</h2>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/catalog">Открыть каталог</a>
+        <a class="button button-outline" href="/cart">Корзина</a>
+      </div>
     </div>
   <% } %>
 </section>
-

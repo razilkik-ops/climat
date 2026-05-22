@@ -1,62 +1,124 @@
-<section class="hero">
-  <div class="hero-media">
-    <img src="/img/hero-interior.jpg" alt="Современная квартира с аккуратно установленным кондиционером">
-  </div>
-  <div class="hero-content reveal">
-    <p class="eyebrow">Минск · подбор · монтаж · сервис</p>
-    <h1>Кондиционеры под ключ</h1>
-    <p>Подбираем модель под площадь, шум, бюджет и интерьер, привозим, монтируем чисто и остаемся на сервисе после установки.</p>
+<section class="hero shop-hero">
+  <div class="hero-copy reveal">
+    <span class="location-pill">⌂ Работаем в Минске и области</span>
+    <h1>Климат, который <span>создаёт комфорт</span></h1>
+    <p>Подберём идеальный кондиционер, профессионально установим и обеспечим сервисное обслуживание.</p>
     <div class="hero-actions">
-      <a class="button button-light" href="/quiz">Пройти подбор</a>
-      <a class="button button-ghost" href="/catalog">Открыть каталог</a>
+      <a class="button button-primary" href="/quiz">Подобрать кондиционер <span>→</span></a>
+      <a class="button button-white" href="/calculator">Рассчитать стоимость <span>→</span></a>
     </div>
   </div>
-</section>
-
-<section class="trust-strip">
-  <div><strong>7 лет</strong><span>монтажа в Минске</span></div>
-  <div><strong><%= productsCount %>+</strong><span>моделей в подборе</span></div>
-  <div><strong>2 года</strong><span>гарантия на работы</span></div>
-  <div><strong>24 ч</strong><span>быстрый расчет</span></div>
-</section>
-
-<section class="section two-column">
-  <div>
-    <p class="eyebrow">Не просто продать коробку</p>
-    <h2>Сначала считаем задачу, потом предлагаем модель</h2>
+  <div class="hero-visual reveal">
+    <div class="conditioner-unit">
+      <div class="unit-display">23°</div>
+      <div class="unit-brand">Climat</div>
+      <div class="unit-slit"></div>
+      <div class="cool-flow"></div>
+    </div>
+    <div class="hero-card">
+      <span>Mitsubishi Electric</span>
+      <strong>MSZ-LN25VG2W</strong>
+      <small>от 2 640 BYN</small>
+      <a href="/catalog">→</a>
+    </div>
   </div>
-  <div class="process-grid">
-    <div><span>01</span><strong>Площадь и теплопритоки</strong><p>Учитываем окна, этаж, солнечную сторону, технику и сценарии использования.</p></div>
-    <div><span>02</span><strong>Трасса и монтаж</strong><p>Проверяем маршрут, дренаж, доступ к фасаду и эстетику внутреннего блока.</p></div>
-    <div><span>03</span><strong>Смета без сюрпризов</strong><p>Разделяем оборудование, материалы, монтаж и опции до выезда бригады.</p></div>
-    <div><span>04</span><strong>Сервис после оплаты</strong><p>Фиксируем гарантию, напоминания о чистке и историю обращений в CRM.</p></div>
+  <div class="hero-features">
+    <div><b>✣</b><strong>Бесплатный подбор</strong><span>за 15 минут</span></div>
+    <div><b>☑</b><strong>Профессиональный монтаж</strong><span>от 1 дня</span></div>
+    <div><b>◎</b><strong>Гарантия до 5 лет</strong><span>на оборудование и работы</span></div>
+    <div><b>◇</b><strong>Честные цены</strong><span>без скрытых платежей</span></div>
   </div>
 </section>
 
-<section class="section">
+<section class="section categories-section">
   <div class="section-head">
     <div>
-      <p class="eyebrow">Популярные решения</p>
-      <h2>Модели, которые чаще всего выбирают после консультации</h2>
+      <p class="eyebrow">Лёгкий выбор</p>
+      <h2>Подберите кондиционер<br>под ваши задачи</h2>
     </div>
-    <a class="button button-dark" href="/catalog">Все модели</a>
+    <a class="link-arrow" href="/catalog">Перейти в каталог <span>→</span></a>
   </div>
-  <div class="catalog-grid">
-    <% featured.forEach((product) => { %>
+  <div class="category-row">
+    <a class="category-card active" href="/catalog?type=split">
+      <img src="/img/interior.jpg" alt="Кондиционер для квартиры">
+      <strong>Для квартиры</strong>
+      <span>Оптимальный климат для дома и квартиры</span>
+    </a>
+    <a class="category-card" href="/catalog?type=designer">
+      <img src="/img/hero-interior.jpg" alt="Кондиционер для дома">
+      <strong>Для дома</strong>
+      <span>Мощные решения для частных домов</span>
+    </a>
+    <a class="category-card" href="/catalog?type=commercial">
+      <img src="/img/office.jpg" alt="Кондиционер для офиса">
+      <strong>Для офиса</strong>
+      <span>Эффективные системы для бизнеса</span>
+    </a>
+    <a class="category-card" href="/catalog?type=commercial">
+      <img src="/img/install-1.jpg" alt="Кондиционер для магазина">
+      <strong>Для магазина</strong>
+      <span>Поддержание климата в торговых залах</span>
+    </a>
+    <a class="category-card" href="/catalog?wifi=on">
+      <img src="/img/tools.jpg" alt="Кондиционер для сервера">
+      <strong>Для сервера</strong>
+      <span>Точное охлаждение оборудования</span>
+    </a>
+  </div>
+  <div class="slider-dots"><span></span><span class="active"></span><span></span></div>
+</section>
+
+<section class="section featured-section">
+  <div class="featured-title">
+    <p class="eyebrow">Популярные модели</p>
+    <h2>Кондиционеры с лучшим соотношением цены и качества</h2>
+    <a class="link-arrow" href="/catalog">Смотреть все модели <span>→</span></a>
+  </div>
+  <div class="featured-products">
+    <% featured.slice(0, 3).forEach((product) => { %>
       <%- include('../partials/product-card', { product }) %>
     <% }) %>
   </div>
 </section>
 
-<section class="section quote-band">
+<section class="section trust-banner">
   <div>
-    <p class="eyebrow">Быстрый старт</p>
-    <h2>Получите подборку и ориентир по монтажу за 2 минуты</h2>
+    <h2>Почему нам доверяют</h2>
+    <div class="trust-numbers">
+      <div><strong>10+</strong><span>лет на рынке</span></div>
+      <div><strong>5000+</strong><span>установленных кондиционеров</span></div>
+      <div><strong>100%</strong><span>оригинальное оборудование</span></div>
+      <div><strong>5 лет</strong><span>гарантия на монтаж</span></div>
+    </div>
   </div>
-  <form action="/api/leads" method="post" class="lead-form">
-    <input type="hidden" name="source" value="home">
-    <label>Имя<input name="name" placeholder="Ваше имя" required></label>
-    <label>Телефон<input name="phone" placeholder="+375..." required></label>
-    <button class="button button-light" type="submit">Получить расчет</button>
-  </form>
+  <img src="/img/technician.jpg" alt="Монтаж кондиционера">
+  <div class="rating-card"><strong>4.9</strong><span>★★★★★</span><small>средняя оценка на основе 300+ отзывов</small></div>
+</section>
+
+<section class="section process-section">
+  <p class="eyebrow">Как мы работаем</p>
+  <h2>Простой и понятный процесс</h2>
+  <div class="process-grid">
+    <div><span>01</span><b>▣</b><strong>Оставляете заявку</strong><p>Позвоните или оставьте заявку на сайте</p></div>
+    <div><span>02</span><b>⌘</b><strong>Подбираем решение</strong><p>Консультация и подбор оборудования</p></div>
+    <div><span>03</span><b>☑</b><strong>Согласовываем</strong><p>Стоимость, сроки и детали монтажа</p></div>
+    <div><span>04</span><b>▤</b><strong>Устанавливаем</strong><p>Профессиональный монтаж в срок</p></div>
+    <div><span>05</span><b>✣</b><strong>Обслуживаем</strong><p>Гарантия и сервисная поддержка</p></div>
+  </div>
+  <a class="link-arrow center-link" href="/installation">Подробнее о монтаже <span>→</span></a>
+</section>
+
+<section class="section consult-banner">
+  <div>
+    <p class="eyebrow">Спецпредложение</p>
+    <h2>Бесплатный выезд<br>на замер и консультацию</h2>
+    <p>Наш специалист приедет, оценит помещение и предложит лучшее решение для вашего комфорта.</p>
+    <a class="button button-white" href="/quiz">Заказать выезд <span>→</span></a>
+  </div>
+  <img src="/img/hero-interior.jpg" alt="Комната с кондиционером">
+  <div class="consult-list">
+    <span>☑ Замер — бесплатно</span>
+    <span>☑ Консультация — бесплатно</span>
+    <span>☑ Подбор — бесплатно</span>
+  </div>
 </section>

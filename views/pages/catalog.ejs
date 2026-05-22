@@ -1,7 +1,7 @@
-<section class="page-title">
+<section class="page-title compact-title">
   <p class="eyebrow">Каталог</p>
-  <h1>Кондиционеры с понятным подбором</h1>
-  <p>Фильтруйте по бренду, площади, цене и функциям. До 4 моделей можно отправить в сравнение.</p>
+  <h1>Интернет‑магазин кондиционеров</h1>
+  <p>Выбирайте модель, добавляйте в корзину и оформляйте заказ с монтажом.</p>
 </section>
 
 <section class="catalog-layout">
@@ -44,7 +44,10 @@
   <div>
     <div class="catalog-tools">
       <span>Найдено: <strong><%= products.length %></strong></span>
-      <a class="button button-outline" href="/compare" data-compare-link>Сравнить выбранные</a>
+      <div class="catalog-actions">
+        <a class="button button-outline" href="/compare" data-compare-link>Сравнить выбранные</a>
+        <a class="button button-primary" href="/cart">Корзина <span data-cart-count>0</span></a>
+      </div>
     </div>
     <div class="catalog-grid">
       <% products.forEach((product) => { %>
@@ -60,4 +63,3 @@
     <% } %>
   </div>
 </section>
-
