@@ -13,6 +13,8 @@
   --yellow: #ffc94a;
   --shadow: 0 28px 80px rgba(35, 105, 244, 0.16);
   --radius: 8px;
+  --container: min(1120px, calc(100% - 32px));
+  --edge: 16px;
 }
 
 * {
@@ -62,7 +64,7 @@ button {
 .cart-layout,
 .admin-shell,
 .form-shell {
-  width: min(1120px, calc(100% - 32px));
+  width: var(--container);
   margin: 0 auto;
 }
 
@@ -250,7 +252,7 @@ button:hover {
 
 .shop-hero {
   position: relative;
-  width: min(1120px, calc(100% - 32px));
+  width: var(--container);
   min-height: 600px;
   margin: -138px auto 0;
   padding: 220px 0 54px;
@@ -1237,7 +1239,7 @@ th {
   display: grid;
   grid-template-columns: 1.5fr repeat(4, 1fr);
   gap: 48px;
-  width: min(1120px, calc(100% - 32px));
+  width: var(--container);
   margin: 0 auto;
   padding: 56px 0 42px;
 }
@@ -1277,7 +1279,7 @@ th {
 .footer-bottom {
   justify-content: space-between;
   gap: 20px;
-  width: min(1120px, calc(100% - 32px));
+  width: var(--container);
   margin: 0 auto;
   padding: 24px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1391,6 +1393,87 @@ th {
 
 [hidden] {
   display: none !important;
+}
+
+@media (min-width: 1081px) {
+  :root {
+    --container: min(1760px, calc(100% - 96px));
+    --edge: max(48px, calc((100vw - 1760px) / 2));
+  }
+
+  .shop-hero {
+    width: 100%;
+    min-height: 760px;
+    padding: 230px var(--edge) 70px;
+  }
+
+  .shop-hero::before {
+    inset: 0;
+  }
+
+  .shop-hero::after {
+    inset: 0 0 0 48%;
+  }
+
+  .hero-copy {
+    width: min(720px, 52%);
+  }
+
+  h1 {
+    font-size: clamp(54px, 5vw, 82px);
+  }
+
+  .hero-copy p {
+    max-width: 600px;
+    font-size: 19px;
+  }
+
+  .hero-visual {
+    right: var(--edge);
+    top: 245px;
+    width: min(720px, 43vw);
+    height: 350px;
+  }
+
+  .unit-display {
+    right: 120px;
+    top: 86px;
+  }
+
+  .unit-brand {
+    left: 46%;
+    top: 47%;
+  }
+
+  .hero-card {
+    right: 46px;
+    bottom: -36px;
+    width: 300px;
+    padding: 24px;
+  }
+
+  .hero-features {
+    gap: 44px;
+    margin-top: 96px;
+  }
+
+  .section {
+    padding: 86px 0;
+  }
+
+  .category-row {
+    gap: 24px;
+  }
+
+  .featured-section {
+    grid-template-columns: 330px minmax(0, 1fr);
+    gap: 52px;
+  }
+
+  .warranty-grid,
+  .admin-stats {
+    gap: 24px;
+  }
 }
 
 @media (max-width: 1080px) {
