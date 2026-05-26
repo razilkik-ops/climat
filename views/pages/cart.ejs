@@ -1,30 +1,136 @@
-<section class="page-title compact-title">
-  <p class="eyebrow">Корзина</p>
-  <h1>Оформите заказ онлайн</h1>
-  <p>Проверьте товары, добавьте монтаж и оставьте контакты. Менеджер подтвердит наличие и время установки.</p>
-</section>
+<section class="cart-shell">
+  <div class="cart-main-panel">
+    <nav class="cart-breadcrumbs" aria-label="Навигация">
+      <a href="/">Главная</a>
+      <span>›</span>
+      <b>Корзина</b>
+    </nav>
 
-<section class="cart-layout">
-  <div class="cart-panel">
+    <header class="cart-title">
+      <h1>Корзина</h1>
+      <p>Проверьте состав заказа и оформите покупку</p>
+    </header>
+
     <div class="cart-empty" data-cart-empty>
       <h2>Корзина пока пустая</h2>
       <p>Добавьте кондиционер из каталога, чтобы оформить заказ.</p>
       <a class="button button-primary" href="/catalog">Перейти в каталог</a>
     </div>
+
     <div class="cart-items" data-cart-items></div>
+
+    <section class="cart-services" data-cart-services>
+      <header>
+        <span class="cart-service-icon"><span class="ui-icon icon-shield"></span></span>
+        <div>
+          <h2>Добавьте услуги к заказу</h2>
+          <p>Выберите необходимые услуги</p>
+        </div>
+      </header>
+      <div class="cart-service-grid">
+        <label class="cart-service-card selected">
+          <input type="checkbox" data-service-toggle data-service-name="Монтаж" data-service-price="0" checked>
+          <span class="cart-service-mark"><span class="ui-icon icon-tools"></span></span>
+          <strong>Монтаж</strong>
+          <small>Профессиональная установка с гарантией</small>
+          <b>от <span data-cart-install-min>0 BYN</span></b>
+        </label>
+        <label class="cart-service-card">
+          <input type="checkbox" data-service-toggle data-service-name="Гарантия +1 год" data-service-price="120">
+          <span class="cart-service-mark"><span class="ui-icon icon-shield"></span></span>
+          <strong>Гарантия +1 год</strong>
+          <small>Расширенная гарантия на оборудование</small>
+          <b>от 120 BYN</b>
+        </label>
+        <label class="cart-service-card">
+          <input type="checkbox" data-service-toggle data-service-name="Сервисное обслуживание" data-service-price="150">
+          <span class="cart-service-mark"><span class="ui-icon icon-tools"></span></span>
+          <strong>Сервисное обслуживание</strong>
+          <small>Плановое обслуживание и приоритетный выезд</small>
+          <b>от 150 BYN</b>
+        </label>
+      </div>
+    </section>
+
+    <section class="cart-recommend">
+      <header>
+        <span class="cart-service-icon">＋</span>
+        <h2>Рекомендуем добавить</h2>
+      </header>
+      <div class="cart-recommend-grid">
+        <article>
+          <img src="/img/ref-service-install.png" alt="">
+          <div>
+            <strong>Кронштейн настенный</strong>
+            <small>для наружного блока</small>
+            <b>45 BYN</b>
+          </div>
+          <button type="button" aria-label="Добавить">+</button>
+        </article>
+        <article>
+          <img src="/img/ref-cta-unit.png" alt="">
+          <div>
+            <strong>Медная трасса 1/4–3/8</strong>
+            <small>5 метров</small>
+            <b>120 BYN</b>
+          </div>
+          <button type="button" aria-label="Добавить">+</button>
+        </article>
+      </div>
+    </section>
   </div>
 
-  <form action="/orders" method="post" class="smart-form checkout-card" data-cart-form>
-    <input type="hidden" name="cartItems" data-cart-payload>
-    <h2>Данные покупателя</h2>
-    <label>Имя<input name="customer" required></label>
-    <label>Телефон<input name="phone" required></label>
-    <label>Email<input type="email" name="email"></label>
-    <label>Адрес монтажа<input name="address" placeholder="Минск, улица, дом"></label>
-    <div class="cart-total">
-      <span>Итого</span>
-      <strong data-cart-total>0 BYN</strong>
-    </div>
-    <button class="button button-primary" type="submit">Перейти к оплате <span>→</span></button>
-  </form>
+  <aside class="cart-order-card">
+    <form action="/orders" method="post" data-cart-form>
+      <input type="hidden" name="cartItems" data-cart-payload>
+      <header>
+        <span class="cart-order-icon"><span class="ui-icon icon-cart"></span></span>
+        <h2>Ваш заказ</h2>
+      </header>
+
+      <div class="cart-summary-lines">
+        <div><span data-cart-products-label>Товары (0)</span><b data-cart-subtotal>0 BYN</b></div>
+        <div><span>Монтаж</span><b data-cart-install>0 BYN</b></div>
+        <div><span>Доставка</span><b data-cart-delivery>0 BYN</b></div>
+        <div class="discount"><span>Скидка</span><b data-cart-discount>0 BYN</b></div>
+      </div>
+
+      <div class="cart-promo">
+        <input type="text" placeholder="Введите промокод" aria-label="Промокод">
+        <button type="button">Применить</button>
+      </div>
+
+      <div class="cart-delivery-note">
+        <span class="ui-icon icon-cart"></span>
+        <div>
+          <strong>Бесплатная доставка по Минску</strong>
+          <small>При заказе от 500 BYN</small>
+        </div>
+        <b>✓</b>
+      </div>
+
+      <div class="cart-total">
+        <span>Итого</span>
+        <strong data-cart-total>0 BYN</strong>
+      </div>
+
+      <div class="cart-contact-fields" data-cart-contact-fields hidden>
+        <label>Имя<input name="customer" required placeholder="Ваше имя"></label>
+        <label>Телефон<input name="phone" required placeholder="+375 (__) ___-__-__"></label>
+        <label>Email<input type="email" name="email" placeholder="mail@example.com"></label>
+        <label>Адрес<input name="address" placeholder="Минск, улица, дом"></label>
+      </div>
+
+      <button class="button button-primary cart-checkout-button" type="button" data-cart-checkout>Оформить заказ <span>→</span></button>
+      <button class="cart-one-click" type="button"><span>↯</span> Купить в 1 клик</button>
+
+      <div class="cart-benefits">
+        <div><span class="ui-icon icon-shield"></span><strong>Безопасная оплата</strong><small>Онлайн-оплата без комиссии</small></div>
+        <div><span class="ui-icon icon-tools"></span><strong>Поддержка 24/7</strong><small>Ответим на любые вопросы</small></div>
+        <div><span class="ui-icon icon-shield"></span><strong>Гарантия на монтаж</strong><small>Официальная гарантия на работы</small></div>
+      </div>
+
+      <p class="cart-secure"><span class="ui-icon icon-shield"></span> Ваши данные защищены и не будут переданы третьим лицам</p>
+    </form>
+  </aside>
 </section>

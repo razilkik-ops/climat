@@ -8,13 +8,52 @@
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="stylesheet" href="/css/styles.css">
   </head>
-  <body>
+  <body class="<%= currentPath === '/' ? 'home-page' : '' %><%= currentPath.startsWith('/catalog') ? ' catalog-page' : '' %><%= currentPath.startsWith('/product') ? ' product-detail-page' : '' %><%= currentPath.startsWith('/cart') ? ' cart-page' : '' %><%= currentPath.startsWith('/installation') ? ' installation-page' : '' %><%= currentPath.startsWith('/warranty') ? ' warranty-page' : '' %>">
     <%- include('partials/header') %>
     <main>
       <%- include(view) %>
     </main>
+    <div class="product-modal" data-product-modal hidden>
+      <button class="modal-backdrop" type="button" data-modal-close aria-label="Закрыть"></button>
+      <article class="modal-dialog product-detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-product-title">
+        <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">×</button>
+        <div class="modal-gallery">
+          <button class="modal-image" type="button" data-modal-zoom aria-label="Приблизить товар">
+            <img data-modal-image src="/img/ac-white.svg" alt="">
+          </button>
+          <span class="modal-zoom-hint"><span class="ui-icon icon-search"></span>Нажмите, чтобы приблизить</span>
+          <div class="modal-swatches" data-modal-colors>
+            <button type="button" class="active" data-color-name="Белый" data-color="#f8fbff" aria-label="Белый"></button>
+            <button type="button" data-color-name="Графит" data-color="#1d2635" aria-label="Графит"></button>
+            <button type="button" data-color-name="Серебро" data-color="#c9d2df" aria-label="Серебро"></button>
+          </div>
+        </div>
+        <div class="modal-product-copy">
+          <p class="modal-kicker"><span data-modal-brand></span> · подбор под ключ</p>
+          <h2 id="modal-product-title" data-modal-title></h2>
+          <p class="modal-description" data-modal-description></p>
+          <div class="modal-price-row">
+            <strong data-modal-price></strong>
+            <span data-modal-install></span>
+          </div>
+          <div class="modal-specs" data-modal-specs></div>
+          <div class="modal-feature-pills">
+            <span><span class="ui-icon icon-shield"></span>самодиагностика</span>
+            <span><span class="ui-icon icon-tools"></span>монтаж за 1 день</span>
+            <span><span class="ui-icon icon-calendar"></span>сервис 24/7</span>
+          </div>
+          <div class="modal-color-line">
+            <span>Доступные цвета</span>
+            <strong data-modal-color-name>Белый</strong>
+          </div>
+          <div class="hero-actions modal-actions">
+            <button class="button button-primary" type="button" data-modal-cart data-cart-add>Добавить в корзину <span>→</span></button>
+            <a class="button button-outline" href="/compare" data-modal-compare>Сравнить</a>
+          </div>
+        </div>
+      </article>
+    </div>
     <%- include('partials/footer') %>
     <script src="/js/app.js" defer></script>
   </body>
 </html>
-
