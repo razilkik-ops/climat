@@ -1,11 +1,9 @@
-<section class="page-title compact-title">
-  <p class="eyebrow">Каталог</p>
-  <h1>Интернет‑магазин кондиционеров</h1>
-  <p>Выбирайте модель, добавляйте в корзину и оформляйте заказ с монтажом.</p>
-</section>
-
-<section class="catalog-layout">
-  <aside class="filters">
+<section class="catalog-screen">
+  <aside class="filters catalog-filters">
+    <div class="filters-title">
+      <h2>Фильтры</h2>
+      <span class="ui-icon icon-sliders"></span>
+    </div>
     <form method="get" action="/catalog">
       <label>Бренд
         <select name="brand">
@@ -23,9 +21,20 @@
           <option value="commercial" <%= query.type === 'commercial' ? 'selected' : '' %>>Офисные</option>
         </select>
       </label>
-      <label>Площадь от, м²<input type="number" name="area" value="<%= query.area || '' %>" min="10" max="120"></label>
-      <label>Цена от<input type="number" name="minPrice" value="<%= query.minPrice || '' %>" min="0"></label>
-      <label>Цена до<input type="number" name="maxPrice" value="<%= query.maxPrice || '' %>" min="0"></label>
+      <div class="range-field">
+        <span>Площадь, м²</span>
+        <div>
+          <input type="number" name="minArea" value="<%= query.minArea || query.area || '' %>" min="10" max="120" placeholder="от">
+          <input type="number" name="maxArea" value="<%= query.maxArea || '' %>" min="10" max="120" placeholder="до">
+        </div>
+      </div>
+      <div class="range-field">
+        <span>Цена, BYN</span>
+        <div>
+          <input type="number" name="minPrice" value="<%= query.minPrice || '' %>" min="0" placeholder="от">
+          <input type="number" name="maxPrice" value="<%= query.maxPrice || '' %>" min="0" placeholder="до">
+        </div>
+      </div>
       <label>Сортировка
         <select name="sort">
           <option value="rating" <%= query.sort === 'rating' ? 'selected' : '' %>>По рейтингу</option>
@@ -35,20 +44,33 @@
         </select>
       </label>
       <label class="check"><input type="checkbox" name="inverter" <%= query.inverter === 'on' ? 'checked' : '' %>> Инвертор</label>
-      <label class="check"><input type="checkbox" name="wifi" <%= query.wifi === 'on' ? 'checked' : '' %>> Wi-Fi</label>
-      <button class="button button-dark" type="submit">Применить</button>
-      <a class="reset-link" href="/catalog">Сбросить</a>
+      <label class="check"><input type="checkbox" name="wifi" <%= query.wifi === 'on' ? 'checked' : '' %>> Wi‑Fi</label>
+      <button class="button button-primary" type="submit">Применить</button>
+      <a class="button button-outline reset-link" href="/catalog">Сбросить</a>
     </form>
   </aside>
 
-  <div>
-    <div class="catalog-tools">
-      <span>Найдено: <strong><%= products.length %></strong></span>
+  <div class="catalog-main">
+    <div class="catalog-topline">
+      <div class="catalog-title-row">
+        <h1>Кондиционеры</h1>
+        <span><%= products.length %> моделей</span>
+      </div>
       <div class="catalog-actions">
-        <a class="button button-outline" href="/compare" data-compare-link>Сравнить выбранные</a>
-        <a class="button button-primary" href="/cart">Корзина <span data-cart-count>0</span></a>
+        <a class="button button-outline compare-action" href="/compare" data-compare-link><span class="ui-icon icon-scale"></span>Сравнить 2 модели</a>
       </div>
     </div>
+
+    <nav class="catalog-chips" aria-label="Быстрые фильтры">
+      <a class="active" href="/catalog">Все модели</a>
+      <a href="/catalog?type=designer">Дизайн</a>
+      <a href="/catalog?sort=price_desc">Премиум</a>
+      <a href="/catalog?sort=rating">Тихий выбор</a>
+      <a href="/catalog?type=commercial">Для офиса</a>
+      <a href="/catalog?wifi=on">Зима/лето</a>
+      <a href="/catalog?sort=price_asc">Оптимально</a>
+    </nav>
+
     <div class="catalog-grid">
       <% products.forEach((product) => { %>
         <%- include('../partials/product-card', { product }) %>
@@ -58,8 +80,15 @@
       <div class="empty-state">
         <h2>По фильтрам ничего не найдено</h2>
         <p>Сбросьте часть параметров или оставьте заявку, и менеджер подберет альтернативы.</p>
-        <a class="button button-dark" href="/quiz">Подобрать через квиз</a>
+        <a class="button button-primary" href="/quiz">Подобрать через квиз</a>
       </div>
     <% } %>
   </div>
+</section>
+
+<section class="catalog-benefits">
+  <div><span class="ui-icon icon-search"></span><strong>Бесплатный подбор</strong><small>за 15 минут</small></div>
+  <div><span class="ui-icon icon-tools"></span><strong>Профессиональный монтаж</strong><small>от 1 дня</small></div>
+  <div><span class="ui-icon icon-shield"></span><strong>Гарантия до 5 лет</strong><small>на оборудование и работы</small></div>
+  <div><span class="ui-icon icon-tag"></span><strong>Честные цены</strong><small>без скрытых платежей</small></div>
 </section>

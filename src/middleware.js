@@ -10,6 +10,6 @@ export function requireAdmin(req, res, next) {
 export function exposeLocals(req, res, next) {
   res.locals.currentPath = req.path;
   res.locals.admin = req.session?.admin || null;
+  res.locals.currentUser = req.session?.user || null;
   next();
 }
-

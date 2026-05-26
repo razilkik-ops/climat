@@ -1,9 +1,20 @@
 import { Router } from 'express';
+import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma.js';
 import { calculateProjectCost } from '../lib/calculator.js';
 
 const router = Router();
+
+const authSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6)
+});
+
+const registerSchema = authSchema.extend({
+  name: z.string().min(2),
+  phone: z.string().optional()
+});
 
 const leadSchema = z.object({
   name: z.string().min(2),
@@ -20,7 +31,7 @@ const leadSchema = z.object({
 function parseIds(value) {
   if (!value) return [];
   const raw = Array.isArray(value) ? value.join(',') : value;
-  return raw.split(',').map((item) => Number(item)).filter(Boolean).slice(0, 4);
+  return raw.split(',').map((item) => Number(item)).filter(Boolean).slice(0, 2);
 }
 
 function parseCartItems(value) {
@@ -68,11 +79,16 @@ router.get('/', async (req, res, next) => {
 
 router.get('/catalog', async (req, res, next) => {
   try {
-    const { brand, type, area, minPrice, maxPrice, inverter, wifi, sort } = req.query;
+    const { brand, type, area, minArea, maxArea, minPrice, maxPrice, inverter, wifi, sort } = req.query;
     const where = {
       ...(brand ? { brand: { slug: String(brand) } } : {}),
       ...(type ? { type: String(type) } : {}),
-      ...(area ? { roomArea: { gte: Number(area) } } : {}),
+      ...((area || minArea || maxArea) ? {
+        roomArea: {
+          ...((area || minArea) ? { gte: Number(area || minArea) } : {}),
+          ...(maxArea ? { lte: Number(maxArea) } : {})
+        }
+      } : {}),
       ...(inverter === 'on' ? { inverter: true } : {}),
       ...(wifi === 'on' ? { wifi: true } : {}),
       ...((minPrice || maxPrice) ? {
@@ -119,20 +135,10 @@ router.get('/product/:slug', async (req, res, next) => {
       return;
     }
 
-    const related = await prisma.product.findMany({
-      where: {
-        id: { not: product.id },
-        roomArea: { gte: Math.max(product.roomArea - 10, 1), lte: product.roomArea + 15 }
-      },
-      take: 3,
-      include: { brand: true }
-    });
-
     res.render('layout', {
       view: 'pages/product',
       title: product.title,
-      product,
-      related
+      product
     });
   } catch (error) {
     next(error);
@@ -164,6 +170,137 @@ router.get('/compare', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.get('/login', (req, res) => {
+  res.render('layout', {
+    view: 'pages/login',
+    title: 'Вход',
+    error: null,
+    form: { email: '' }
+  });
+});
+
+router.post('/login', async (req, res, next) => {
+  try {
+    const data = authSchema.parse(req.body);
+    const email = data.email.toLowerCase();
+    const user = await prisma.user.findUnique({ where: { email } });
+    const valid = user && await bcrypt.compare(data.password, user.passwordHash);
+
+    if (valid) {
+      req.session.userId = user.id;
+      req.session.user = { id: user.id, name: user.name, email: user.email, phone: user.phone };
+      res.redirect('/account');
+      return;
+    }
+
+    const admin = await prisma.adminUser.findUnique({ where: { email } });
+    const validAdmin = admin && await bcrypt.compare(data.password, admin.passwordHash);
+
+    if (validAdmin) {
+      req.session.adminId = admin.id;
+      req.session.admin = { email: admin.email, role: admin.role };
+      res.redirect('/admin');
+      return;
+    }
+
+    if (!validAdmin) {
+      res.status(401).render('layout', {
+        view: 'pages/login',
+        title: 'Вход',
+        error: 'Неверный email или пароль',
+        form: { email: data.email }
+      });
+      return;
+    }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      res.status(400).render('layout', {
+        view: 'pages/login',
+        title: 'Вход',
+        error: 'Введите корректный email и пароль от 6 символов',
+        form: { email: req.body.email || '' }
+      });
+      return;
+    }
+
+    next(error);
+  }
+});
+
+router.get('/register', (req, res) => {
+  res.render('layout', {
+    view: 'pages/register',
+    title: 'Регистрация',
+    error: null,
+    form: { name: '', email: '', phone: '' }
+  });
+});
+
+router.post('/register', async (req, res, next) => {
+  try {
+    const data = registerSchema.parse(req.body);
+    const email = data.email.toLowerCase();
+    const existing = await prisma.user.findUnique({ where: { email } });
+
+    if (existing) {
+      res.status(409).render('layout', {
+        view: 'pages/register',
+        title: 'Регистрация',
+        error: 'Пользователь с таким email уже зарегистрирован',
+        form: { name: data.name, email, phone: data.phone || '' }
+      });
+      return;
+    }
+
+    const user = await prisma.user.create({
+      data: {
+        name: data.name,
+        email,
+        phone: data.phone || null,
+        passwordHash: await bcrypt.hash(data.password, 12)
+      }
+    });
+
+    req.session.userId = user.id;
+    req.session.user = { id: user.id, name: user.name, email: user.email, phone: user.phone };
+    res.redirect('/account');
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      res.status(400).render('layout', {
+        view: 'pages/register',
+        title: 'Регистрация',
+        error: 'Заполните имя, корректный email и пароль от 6 символов',
+        form: {
+          name: req.body.name || '',
+          email: req.body.email || '',
+          phone: req.body.phone || ''
+        }
+      });
+      return;
+    }
+
+    next(error);
+  }
+});
+
+router.get('/account', (req, res) => {
+  if (!req.session?.userId) {
+    res.redirect('/login');
+    return;
+  }
+
+  res.render('layout', {
+    view: 'pages/account',
+    title: 'Личный кабинет'
+  });
+});
+
+router.post('/logout', (req, res) => {
+  req.session.userId = null;
+  req.session.user = null;
+  res.redirect('/');
 });
 
 router.get('/quiz', async (req, res) => {
@@ -245,6 +382,37 @@ router.post('/api/calculate', (req, res) => {
   res.json(calculateProjectCost(req.body));
 });
 
+router.get('/api/products/:slug', async (req, res, next) => {
+  try {
+    const product = await prisma.product.findUnique({
+      where: { slug: req.params.slug },
+      include: { brand: true }
+    });
+
+    if (!product) {
+      res.status(404).json({ error: 'Товар не найден' });
+      return;
+    }
+
+    res.json({
+      id: product.id,
+      title: product.title,
+      slug: product.slug,
+      price: product.price,
+      installPrice: product.installPrice,
+      image: product.image,
+      brand: product.brand.name,
+      description: product.description || 'Тихая инверторная модель для квартиры, дома или офиса с профессиональным монтажом под ключ.',
+      area: product.roomArea,
+      power: product.coolingPower || '',
+      noise: product.noiseLevel || '',
+      energy: product.energyClass || ''
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/api/leads', async (req, res, next) => {
   try {
     const data = leadSchema.parse(req.body);
@@ -295,6 +463,13 @@ router.get('/checkout', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.get('/payment', (req, res) => {
+  res.render('layout', {
+    view: 'pages/delivery-payment',
+    title: 'Доставка и оплата'
+  });
 });
 
 router.post('/orders', async (req, res, next) => {

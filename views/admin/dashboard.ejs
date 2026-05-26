@@ -3,7 +3,7 @@
   <div class="admin-content">
     <div class="section-head">
       <div>
-        <p class="eyebrow">CRM</p>
+        <p class="eyebrow">Админка</p>
         <h1>Панель управления</h1>
       </div>
       <form action="/admin/logout" method="post"><button class="button button-outline" type="submit">Выйти</button></form>
@@ -19,7 +19,7 @@
       <section class="admin-panel">
         <h2>Свежие заявки</h2>
         <% recentLeads.forEach((lead) => { %>
-          <div class="crm-row">
+          <div class="admin-row">
             <strong><%= lead.name %></strong>
             <span><%= lead.phone %></span>
             <em><%= leadStatusLabel(lead.status) %></em>
@@ -29,7 +29,7 @@
       <section class="admin-panel">
         <h2>Заказы</h2>
         <% recentOrders.forEach((order) => { %>
-          <div class="crm-row">
+          <div class="admin-row">
             <strong>#<%= order.id %> · <%= order.customer %></strong>
             <span><%= money(order.total) %></span>
             <em><%= orderStatusLabel(order.status) %></em>
@@ -39,4 +39,3 @@
     </div>
   </div>
 </section>
-

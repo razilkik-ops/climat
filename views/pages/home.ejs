@@ -1,124 +1,271 @@
-<section class="hero shop-hero">
+<section class="hero shop-hero dark-hero">
   <div class="hero-copy reveal">
     <span class="location-pill">⌂ Работаем в Минске и области</span>
-    <h1>Климат, который <span>создаёт комфорт</span></h1>
-    <p>Подберём идеальный кондиционер, профессионально установим и обеспечим сервисное обслуживание.</p>
+    <h1>Климат,<br><span class="h1-muted">который создаёт</span><br><span>комфорт</span></h1>
+    <p>Продажа и профессиональная установка кондиционеров в Минске. Подберём, установим и обеспечим сервисное обслуживание.</p>
     <div class="hero-actions">
       <a class="button button-primary" href="/quiz">Подобрать кондиционер <span>→</span></a>
-      <a class="button button-white" href="/calculator">Рассчитать стоимость <span>→</span></a>
+      <a class="button button-outline" href="/calculator">Рассчитать стоимость <span>⌑</span></a>
     </div>
   </div>
-  <div class="hero-visual reveal">
-    <div class="conditioner-unit">
+
+  <div class="hero-visual reveal" aria-hidden="true">
+    <div class="conditioner-unit dark-unit">
       <div class="unit-display">23°</div>
-      <div class="unit-brand">Climat</div>
+      <div class="unit-brand">CLIMAT</div>
       <div class="unit-slit"></div>
       <div class="cool-flow"></div>
-    </div>
-    <div class="hero-card">
-      <span>Mitsubishi Electric</span>
-      <strong>MSZ-LN25VG2W</strong>
-      <small>от 2 640 BYN</small>
-      <a href="/catalog">→</a>
+      <div class="cool-flow flow-two"></div>
+      <div class="cool-flow flow-three"></div>
     </div>
   </div>
+
   <div class="hero-features">
     <div><b>✣</b><strong>Бесплатный подбор</strong><span>за 15 минут</span></div>
-    <div><b>☑</b><strong>Профессиональный монтаж</strong><span>от 1 дня</span></div>
+    <div><b>▣</b><strong>Профессиональный монтаж</strong><span>от 1 дня</span></div>
     <div><b>◎</b><strong>Гарантия до 5 лет</strong><span>на оборудование и работы</span></div>
     <div><b>◇</b><strong>Честные цены</strong><span>без скрытых платежей</span></div>
   </div>
 </section>
 
-<section class="section categories-section">
-  <div class="section-head">
+<section class="section home-control-grid" id="quick-selection">
+  <div class="home-panel task-panel reveal">
+    <p class="quick-eyebrow">Быстрый подбор</p>
+    <h2>Подбор по задачам</h2>
+    <div class="task-grid">
+      <a class="task-card active task-apartment" href="/catalog?type=split">
+        <span></span>
+        <strong>Для квартиры</strong>
+        <small>Спальня, гостиная, детская</small>
+      </a>
+      <a class="task-card task-home" href="/catalog?type=designer">
+        <span></span>
+        <strong>Для дома</strong>
+        <small>Частные дома и коттеджи</small>
+      </a>
+      <a class="task-card task-office" href="/catalog?type=commercial">
+        <span></span>
+        <strong>Для офиса</strong>
+        <small>Офисы, магазины и коммерция</small>
+      </a>
+      <a class="task-card task-server" href="/catalog?wifi=on">
+        <span></span>
+        <strong>Для сервера</strong>
+        <small>Точное охлаждение оборудования</small>
+      </a>
+    </div>
+    <a class="panel-link" href="/quiz">Пройти подбор за 1 минуту <span>→</span></a>
+  </div>
+
+  <div class="home-panel cost-panel reveal">
+    <h2>Рассчитайте стоимость</h2>
+    <p>Узнайте точную стоимость с установкой за 30 секунд</p>
+    <form action="/calculator" method="get">
+      <label>
+        <span>Тип помещения</span>
+        <select name="type">
+          <option>Выберите тип</option>
+          <option>Квартира</option>
+          <option>Дом</option>
+          <option>Офис</option>
+        </select>
+      </label>
+      <label>
+        <span>Площадь помещения</span>
+        <select name="area">
+          <option>25 м²</option>
+          <option>35 м²</option>
+          <option>50 м²</option>
+        </select>
+      </label>
+      <button class="button button-primary" type="submit">Рассчитать стоимость <span>→</span></button>
+    </form>
+  </div>
+
+  <div class="service-stack">
+    <a class="home-panel service-card reveal" href="/installation">
+      <span class="service-install"></span>
+      <strong>Монтаж за 1 день</strong>
+      <small>Установим быстро и аккуратно</small>
+    </a>
+    <a class="home-panel service-card reveal" href="/warranty">
+      <span class="service-care"></span>
+      <strong>Сервис и обслуживание</strong>
+      <small>Поддержка 24/7 и регулярное ТО</small>
+    </a>
+  </div>
+</section>
+
+<section class="section home-products-section" id="popular-products">
+  <div class="home-panel reveal">
+    <div class="section-head compact-head">
+      <div>
+        <h2>Популярные модели</h2>
+        <p>Выберите надёжный кондиционер под ваши задачи и бюджет</p>
+      </div>
+      <div class="product-slider-controls" aria-label="Навигация по популярным моделям">
+        <a href="/catalog" aria-label="Предыдущие модели"><span>←</span></a>
+        <a class="active" href="/catalog" aria-label="Следующие модели"><span>→</span></a>
+      </div>
+    </div>
+    <div class="featured-products dark-products">
+      <%
+        const fallbackIds = (featured || []).map((product) => product.id);
+        const homeProducts = [
+          {
+            id: fallbackIds[0] || 1,
+            brand: { name: 'Mitsubishi Electric' },
+            title: 'MSZ-LN25VG2W',
+            slug: 'mitsubishi-electric-msz-ap35vg',
+            roomArea: 25,
+            price: 2640,
+            installPrice: 560,
+            badge: 'Хит',
+            image: '/img/ref-product-dark.png',
+            chips: ['Тихий режим 19 дБ']
+          },
+          {
+            id: fallbackIds[1] || 2,
+            brand: { name: 'Daikin' },
+            title: 'FTXP25M',
+            slug: 'daikin-sensira-ftxf25e',
+            roomArea: 25,
+            price: 2290,
+            installPrice: 520,
+            badge: null,
+            image: '/img/ref-product-daikin-clean.png',
+            chips: ['Энергоэффективность A+++']
+          },
+          {
+            id: fallbackIds[2] || 3,
+            brand: { name: 'Hisense' },
+            title: 'AS-09UW4RYDTG',
+            slug: 'cooper-hunter-nordic-evo-ii-ch-s09ftxn',
+            roomArea: 25,
+            price: 1950,
+            installPrice: 520,
+            badge: 'Wi-Fi',
+            image: '/img/ref-product-hisense-clean.png',
+            chips: ['Wi-Fi управление']
+          },
+          {
+            id: fallbackIds[3] || 4,
+            brand: { name: 'LG' },
+            title: 'S09ET',
+            slug: 'gree-pular-inverter-gwh12agb',
+            roomArea: 25,
+            price: 2150,
+            installPrice: 540,
+            badge: null,
+            image: '/img/ref-product-lg-clean.png',
+            chips: ['Ионизация воздуха']
+          }
+        ];
+      %>
+      <% homeProducts.forEach((product) => { %>
+        <%- include('../partials/product-card', { product }) %>
+      <% }) %>
+    </div>
+    <div class="product-benefits" aria-label="Преимущества покупки">
+      <div>
+        <span class="benefit-icon benefit-shield"></span>
+        <strong>Оригинальная техника</strong>
+        <p>Только сертифицированные модели от официальных поставщиков</p>
+      </div>
+      <div>
+        <span class="benefit-icon benefit-award"></span>
+        <strong>Гарантия до 5 лет</strong>
+        <p>Расширенная гарантия на оборудование и монтажные работы</p>
+      </div>
+      <div>
+        <span class="benefit-icon benefit-truck"></span>
+        <strong>Быстрая доставка</strong>
+        <p>Доставка и монтаж в удобное для вас время</p>
+      </div>
+      <div>
+        <span class="benefit-icon benefit-headset"></span>
+        <strong>Поддержка 24/7</strong>
+        <p>Всегда на связи и готовы помочь</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section work-process-section" id="work-process">
+  <div class="process-heading reveal">
+    <h2>Как мы работаем</h2>
+    <p>Простой и прозрачный процесс от заявки до идеального климата<br>в вашем помещении.</p>
+  </div>
+  <div class="process-grid dark-process reveal">
+    <article class="process-step process-request">
+      <b aria-hidden="true"></b>
+      <span>01</span>
+      <strong>Заявка</strong>
+      <i></i>
+      <p>Оставляете заявку<br>на сайте или<br>по телефону</p>
+    </article>
+    <article class="process-step process-select">
+      <b aria-hidden="true"></b>
+      <span>02</span>
+      <strong>Подбор</strong>
+      <i></i>
+      <p>Подбираем<br>оптимальное решение<br>под ваши задачи</p>
+    </article>
+    <article class="process-step process-calc">
+      <b aria-hidden="true"></b>
+      <span>03</span>
+      <strong>Расчёт</strong>
+      <i></i>
+      <p>Считаем стоимость<br>с установкой</p>
+    </article>
+    <article class="process-step process-install">
+      <b aria-hidden="true"></b>
+      <span>04</span>
+      <strong>Монтаж</strong>
+      <i></i>
+      <p>Устанавливаем<br>оборудование за 1 день</p>
+    </article>
+    <article class="process-step process-service">
+      <b aria-hidden="true"></b>
+      <span>05</span>
+      <strong>Сервис</strong>
+      <i></i>
+      <p>Гарантийное и<br>постгарантийное<br>обслуживание</p>
+    </article>
+  </div>
+  <div class="process-support reveal">
+    <span aria-hidden="true"></span>
     <div>
-      <p class="eyebrow">Лёгкий выбор</p>
-      <h2>Подберите кондиционер<br>под ваши задачи</h2>
-    </div>
-    <a class="link-arrow" href="/catalog">Перейти в каталог <span>→</span></a>
-  </div>
-  <div class="category-row">
-    <a class="category-card active" href="/catalog?type=split">
-      <img src="/img/interior.jpg" alt="Кондиционер для квартиры">
-      <strong>Для квартиры</strong>
-      <span>Оптимальный климат для дома и квартиры</span>
-    </a>
-    <a class="category-card" href="/catalog?type=designer">
-      <img src="/img/hero-interior.jpg" alt="Кондиционер для дома">
-      <strong>Для дома</strong>
-      <span>Мощные решения для частных домов</span>
-    </a>
-    <a class="category-card" href="/catalog?type=commercial">
-      <img src="/img/office.jpg" alt="Кондиционер для офиса">
-      <strong>Для офиса</strong>
-      <span>Эффективные системы для бизнеса</span>
-    </a>
-    <a class="category-card" href="/catalog?type=commercial">
-      <img src="/img/install-1.jpg" alt="Кондиционер для магазина">
-      <strong>Для магазина</strong>
-      <span>Поддержание климата в торговых залах</span>
-    </a>
-    <a class="category-card" href="/catalog?wifi=on">
-      <img src="/img/tools.jpg" alt="Кондиционер для сервера">
-      <strong>Для сервера</strong>
-      <span>Точное охлаждение оборудования</span>
-    </a>
-  </div>
-  <div class="slider-dots"><span></span><span class="active"></span><span></span></div>
-</section>
-
-<section class="section featured-section">
-  <div class="featured-title">
-    <p class="eyebrow">Популярные модели</p>
-    <h2>Кондиционеры с лучшим соотношением цены и качества</h2>
-    <a class="link-arrow" href="/catalog">Смотреть все модели <span>→</span></a>
-  </div>
-  <div class="featured-products">
-    <% featured.slice(0, 3).forEach((product) => { %>
-      <%- include('../partials/product-card', { product }) %>
-    <% }) %>
-  </div>
-</section>
-
-<section class="section trust-banner">
-  <div>
-    <h2>Почему нам доверяют</h2>
-    <div class="trust-numbers">
-      <div><strong>10+</strong><span>лет на рынке</span></div>
-      <div><strong>5000+</strong><span>установленных кондиционеров</span></div>
-      <div><strong>100%</strong><span>оригинальное оборудование</span></div>
-      <div><strong>5 лет</strong><span>гарантия на монтаж</span></div>
+      <strong>Мы с вами на каждом этапе</strong>
+      <p>Поддержка 24/7 и личный менеджер для вашего комфорта.</p>
     </div>
   </div>
-  <img src="/img/technician.jpg" alt="Монтаж кондиционера">
-  <div class="rating-card"><strong>4.9</strong><span>★★★★★</span><small>средняя оценка на основе 300+ отзывов</small></div>
 </section>
 
-<section class="section process-section">
-  <p class="eyebrow">Как мы работаем</p>
-  <h2>Простой и понятный процесс</h2>
-  <div class="process-grid">
-    <div><span>01</span><b>▣</b><strong>Оставляете заявку</strong><p>Позвоните или оставьте заявку на сайте</p></div>
-    <div><span>02</span><b>⌘</b><strong>Подбираем решение</strong><p>Консультация и подбор оборудования</p></div>
-    <div><span>03</span><b>☑</b><strong>Согласовываем</strong><p>Стоимость, сроки и детали монтажа</p></div>
-    <div><span>04</span><b>▤</b><strong>Устанавливаем</strong><p>Профессиональный монтаж в срок</p></div>
-    <div><span>05</span><b>✣</b><strong>Обслуживаем</strong><p>Гарантия и сервисная поддержка</p></div>
-  </div>
-  <a class="link-arrow center-link" href="/installation">Подробнее о монтаже <span>→</span></a>
-</section>
-
-<section class="section consult-banner">
-  <div>
-    <p class="eyebrow">Спецпредложение</p>
-    <h2>Бесплатный выезд<br>на замер и консультацию</h2>
-    <p>Наш специалист приедет, оценит помещение и предложит лучшее решение для вашего комфорта.</p>
-    <a class="button button-white" href="/quiz">Заказать выезд <span>→</span></a>
-  </div>
-  <img src="/img/hero-interior.jpg" alt="Комната с кондиционером">
-  <div class="consult-list">
-    <span>☑ Замер — бесплатно</span>
-    <span>☑ Консультация — бесплатно</span>
-    <span>☑ Подбор — бесплатно</span>
+<section class="section final-cta" id="comfort-cta">
+  <div class="home-panel cta-panel reveal">
+    <div class="cta-copy">
+      <p class="cta-kicker">Комфорт в каждом помещении</p>
+      <h2>Готовы к комфорту уже <span>сегодня?</span></h2>
+      <p>Оставьте заявку — подберём лучшее решение для вас и установим с гарантией качества.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="/quiz">Подобрать кондиционер <span>→</span></a>
+        <a class="button button-outline" href="/calculator">Рассчитать стоимость <span>⌑</span></a>
+      </div>
+    </div>
+    <div class="cta-unit" aria-hidden="true">
+      <img src="/img/ref-hero-scene.source.png" alt="">
+    </div>
+    <div class="cta-side-list" aria-label="Условия">
+      <div><span class="cta-side-icon cta-truck"></span><strong>Бесплатный выезд</strong><p>и консультация</p></div>
+      <div><span class="cta-side-icon cta-bill"></span><strong>Честная смета</strong><p>без скрытых платежей</p></div>
+      <div><span class="cta-side-icon cta-tools"></span><strong>Монтаж за 1 день</strong></div>
+    </div>
+    <div class="cta-benefits" aria-label="Преимущества">
+      <div><span class="cta-benefit-icon cta-shield"></span><strong>Гарантия до 5 лет</strong><p>на оборудование</p></div>
+      <div><span class="cta-benefit-icon cta-tools"></span><strong>Профессиональный монтаж</strong><p>от 1 дня</p></div>
+      <div><span class="cta-benefit-icon cta-truck"></span><strong>Доставка и подъём</strong><p>бесплатно</p></div>
+      <div><span class="cta-benefit-icon cta-headset"></span><strong>Поддержка 24/7</strong><p>и регулярное ТО</p></div>
+    </div>
   </div>
 </section>

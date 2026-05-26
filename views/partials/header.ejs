@@ -9,10 +9,9 @@
       <a class="call-link" href="/quiz">Заказать звонок</a>
     </div>
     <div class="header-icons">
-      <a class="round-icon" href="/quiz" aria-label="Подбор">↗</a>
-      <a class="round-icon" href="/compare" data-compare-link aria-label="Сравнение">♡</a>
-      <a class="round-icon" href="/admin/login" aria-label="Аккаунт">◎</a>
-      <a class="round-icon cart-link" href="/cart" aria-label="Корзина">⌑<span data-cart-count>0</span></a>
+      <span class="round-icon header-disabled-icon" aria-label="Подбор" aria-disabled="true"><span class="ui-icon icon-arrow-up"></span></span>
+      <a class="round-icon" href="/compare" data-compare-link aria-label="Сравнение"><span class="ui-icon icon-heart"></span></a>
+      <a class="round-icon cart-link" href="/cart" aria-label="Корзина"><span class="ui-icon icon-cart"></span><span data-cart-count>0</span></a>
     </div>
     <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-label="Меню">
       <span></span>
@@ -22,16 +21,18 @@
   <div class="header-bottom">
     <p>Продажа и профессиональная установка кондиционеров в Минске</p>
     <nav class="main-nav" data-menu>
-      <a href="/catalog" class="<%= currentPath.startsWith('/catalog') ? 'active' : '' %>">Каталог</a>
+      <a href="/catalog" class="<%= currentPath.startsWith('/catalog') || currentPath.startsWith('/product') ? 'active' : '' %>">Каталог</a>
       <a href="/installation" class="<%= currentPath.startsWith('/installation') ? 'active' : '' %>">Монтаж</a>
-      <a href="/quiz" class="<%= currentPath.startsWith('/quiz') ? 'active' : '' %>">Подбор</a>
-      <a href="/calculator" class="<%= currentPath.startsWith('/calculator') ? 'active' : '' %>">Калькулятор</a>
+      <span class="nav-disabled" aria-disabled="true">Подбор</span>
+      <span class="nav-disabled" aria-disabled="true">Калькулятор</span>
       <a href="/warranty" class="<%= currentPath.startsWith('/warranty') ? 'active' : '' %>">Компания</a>
-      <a href="#contacts">Контакты</a>
-      <% if (admin) { %>
-        <a href="/admin">CRM</a>
+      <span class="nav-disabled" aria-disabled="true">Контакты</span>
+      <% if (currentUser) { %>
+        <a href="/account" class="<%= currentPath.startsWith('/account') ? 'active' : '' %>">Кабинет</a>
+      <% } else { %>
+        <a href="/login" class="<%= currentPath.startsWith('/login') || currentPath.startsWith('/register') ? 'active' : '' %>">Вход</a>
       <% } %>
     </nav>
-    <a class="button button-primary" href="/quiz">Подобрать кондиционер <span>→</span></a>
+    <span class="button button-primary header-disabled-cta" aria-disabled="true">Подобрать кондиционер <span>→</span></span>
   </div>
 </header>

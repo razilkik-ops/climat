@@ -1,0 +1,13 @@
+<section class="admin-login">
+  <form action="/register" method="post" class="smart-form auth-form">
+    <p class="eyebrow">Личный кабинет</p>
+    <h1>Регистрация</h1>
+    <% if (error) { %><p class="form-error"><%= error %></p><% } %>
+    <label>Имя<input name="name" value="<%= form.name || '' %>" autocomplete="name" required></label>
+    <label>Email<input type="email" name="email" value="<%= form.email || '' %>" autocomplete="email" required></label>
+    <label>Телефон<input name="phone" value="<%= form.phone || '' %>" autocomplete="tel"></label>
+    <label>Пароль<input type="password" name="password" autocomplete="new-password" minlength="6" required></label>
+    <button class="button button-dark" type="submit">Создать аккаунт</button>
+    <p class="auth-note">Уже есть аккаунт? <a href="/login">Войти</a></p>
+  </form>
+</section>

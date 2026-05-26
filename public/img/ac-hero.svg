@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" fill="none">
+  <defs>
+    <linearGradient id="body" x1="60" y1="18" x2="810" y2="292" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#303642"/>
+      <stop offset=".48" stop-color="#111720"/>
+      <stop offset="1" stop-color="#03060a"/>
+    </linearGradient>
+    <linearGradient id="front" x1="95" y1="204" x2="807" y2="255" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#162236"/>
+      <stop offset=".52" stop-color="#07101b"/>
+      <stop offset="1" stop-color="#0d1726"/>
+    </linearGradient>
+    <filter id="shadow" x="-12%" y="-24%" width="124%" height="160%">
+      <feDropShadow dx="0" dy="34" stdDeviation="28" flood-color="#000" flood-opacity=".48"/>
+    </filter>
+    <filter id="glow" x="-40%" y="-100%" width="180%" height="300%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M72 26h737c26 0 47 21 47 47v162c0 31-25 56-56 56H100c-31 0-56-25-56-56V54c0-15 13-28 28-28Z" fill="url(#body)"/>
+    <path d="M78 35h720c24 0 43 19 43 43v146c0 25-20 46-46 46H105c-25 0-46-21-46-46V54c0-10 9-19 19-19Z" stroke="white" stroke-opacity=".14" stroke-width="2"/>
+    <path d="M86 204h726v48c0 18-15 33-33 33H119c-18 0-33-15-33-33v-48Z" fill="url(#front)"/>
+    <path d="M112 230h642" stroke="#01050b" stroke-width="12" stroke-linecap="round"/>
+    <path d="M132 235h602" stroke="#23364f" stroke-width="5" stroke-linecap="round" opacity=".48"/>
+    <path d="M95 206h705" stroke="#34445a" stroke-opacity=".36" stroke-width="5"/>
+    <text x="710" y="118" fill="#EAF1FF" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">23°</text>
+    <text x="118" y="150" fill="#9DB1D0" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="2">CLIMAT</text>
+    <rect x="600" y="132" width="72" height="6" rx="3" fill="#748198" opacity=".12"/>
+    <rect x="642" y="150" width="94" height="4" rx="2" fill="#748198" opacity=".08"/>
+  </g>
+  <ellipse cx="430" cy="272" rx="380" ry="32" fill="#176EFF" opacity=".32" filter="url(#glow)"/>
+</svg>

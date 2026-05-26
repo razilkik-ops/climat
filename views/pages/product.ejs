@@ -1,6 +1,25 @@
+<% const heroProductImage = product.image === '/img/ref-product-daikin.png' ? '/img/ref-product-daikin-clean.png' : product.image; %>
+
 <section class="product-page">
   <div class="product-visual reveal">
-    <img src="<%= product.image %>" alt="<%= product.title %>">
+    <button class="product-zoom-trigger" type="button" data-quick-view
+      data-id="<%= product.id %>"
+      data-title="<%= product.title %>"
+      data-slug="<%= product.slug %>"
+      data-price="<%= product.price %>"
+      data-install-price="<%= product.installPrice %>"
+      data-image="<%= heroProductImage %>"
+      data-brand="<%= product.brand.name %>"
+      data-description="<%= product.description %>"
+      data-area="<%= product.roomArea %>"
+      data-power="<%= product.coolingPower %>"
+      data-noise="<%= product.noiseLevel %>"
+      data-energy="<%= product.energyClass %>"
+      aria-label="Открыть быстрый просмотр"
+    >
+      <img src="<%= heroProductImage %>" alt="<%= product.title %>">
+      <span>Нажмите, чтобы приблизить</span>
+    </button>
   </div>
   <div class="product-info reveal">
     <p class="eyebrow"><%= product.brand.name %> · <%= product.brand.country %></p>
@@ -8,16 +27,22 @@
     <p><%= product.description %></p>
     <div class="price-line">
       <strong><%= money(product.price) %></strong>
-      <span>монтаж от <%= money(product.installPrice) %></span>
+      <span>монтаж от <b><%= money(product.installPrice) %></b></span>
     </div>
     <div class="spec-grid">
-      <div><span>Площадь</span><strong>до <%= product.roomArea %> м²</strong></div>
-      <div><span>Мощность</span><strong><%= product.coolingPower %> кВт</strong></div>
-      <div><span>Шум</span><strong><%= product.noiseLevel %> дБ</strong></div>
-      <div><span>Класс</span><strong><%= product.energyClass %></strong></div>
+      <div class="spec-area"><span>Площадь</span><strong>до <%= product.roomArea %> м²</strong></div>
+      <div class="spec-power"><span>Мощность</span><strong><%= product.coolingPower %> кВт</strong></div>
+      <div class="spec-noise"><span>Шум</span><strong><%= product.noiseLevel %> дБ</strong></div>
+      <div class="spec-class"><span>Класс</span><strong><%= product.energyClass %></strong></div>
     </div>
     <div class="feature-list">
       <% product.features.forEach((feature) => { %><span><%= feature %></span><% }) %>
+    </div>
+    <div class="product-color-picker">
+      <span>Доступные цвета</span>
+      <button type="button" class="active" aria-label="Белый"></button>
+      <button type="button" aria-label="Графит"></button>
+      <button type="button" aria-label="Серебро"></button>
     </div>
     <div class="hero-actions">
       <button
@@ -29,7 +54,7 @@
         data-slug="<%= product.slug %>"
         data-price="<%= product.price %>"
         data-install-price="<%= product.installPrice %>"
-        data-image="<%= product.image %>"
+        data-image="<%= heroProductImage %>"
         data-brand="<%= product.brand.name %>"
       >Добавить в корзину <span>→</span></button>
       <a class="button button-white" href="/checkout?product=<%= product.slug %>">Купить сейчас</a>
@@ -50,16 +75,4 @@
     <label>Телефон<input name="phone" required></label>
     <button class="button button-light" type="submit">Заказать консультацию</button>
   </form>
-</section>
-
-<section class="section">
-  <div class="section-head">
-    <h2>Похожие модели</h2>
-    <a class="button button-outline" href="/catalog">Каталог</a>
-  </div>
-  <div class="catalog-grid">
-    <% related.forEach((product) => { %>
-      <%- include('../partials/product-card', { product }) %>
-    <% }) %>
-  </div>
 </section>

@@ -30,7 +30,7 @@ const products = [
     badge: 'Тихий выбор',
     description: 'Инверторная сплит-система для спальни, кабинета или детской с мягким распределением потока.',
     features: ['тихий ночной режим', 'экономичное охлаждение', 'самодиагностика', 'фильтрация воздуха'],
-    image: '/img/install-1.jpg'
+    image: '/img/ref-product-daikin.png'
   },
   {
     brand: 'mitsubishi-electric',
@@ -50,7 +50,7 @@ const products = [
     badge: 'Премиум',
     description: 'Премиальная модель для гостиной или большой комнаты с точным климат-контролем и Wi-Fi.',
     features: ['Wi-Fi в комплекте', 'очень низкий шум', 'режим i-save', 'плазменный фильтр'],
-    image: '/img/install-2.jpg'
+    image: '/img/ref-product-dark.png'
   },
   {
     brand: 'cooper-hunter',
@@ -70,7 +70,7 @@ const products = [
     badge: 'Зима/лето',
     description: 'Универсальная модель для охлаждения летом и эффективного обогрева в межсезонье.',
     features: ['работа на обогрев', 'Wi-Fi ready', 'антикоррозийное покрытие', 'теплый старт'],
-    image: '/img/tools.jpg'
+    image: '/img/ref-product-hisense.png'
   },
   {
     brand: 'gree',
@@ -90,7 +90,7 @@ const products = [
     badge: 'Оптимально',
     description: 'Надежная инверторная система для квартиры с хорошим балансом цены и ресурса.',
     features: ['стабильный компрессор', 'автоочистка', 'турборежим', 'запоминание настроек'],
-    image: '/img/technician.jpg'
+    image: '/img/ref-product-lg.png'
   },
   {
     brand: 'daikin',
@@ -110,7 +110,7 @@ const products = [
     badge: 'Дизайн',
     description: 'Тонкий дизайнерский блок для интерьеров, где техника должна выглядеть дорого и спокойно.',
     features: ['эффект Коанда', '3D-поток', 'Wi-Fi', 'серебристый корпус'],
-    image: '/img/interior.jpg'
+    image: '/img/ref-product-daikin.png'
   },
   {
     brand: 'gree',
@@ -130,7 +130,7 @@ const products = [
     badge: 'Для офиса',
     description: 'Полупромышленное решение для офиса, салона, кофейни или помещения сложной формы.',
     features: ['напольно-потолочный монтаж', 'длинная трасса', 'дренажная помпа', 'служебный режим'],
-    image: '/img/office.jpg'
+    image: '/img/ref-product-dark.png'
   }
 ];
 

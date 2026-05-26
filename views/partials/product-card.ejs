@@ -1,16 +1,46 @@
-<article class="product-card reveal">
+<article
+  class="product-card reveal"
+  data-product-card
+  data-id="<%= product.id %>"
+  data-title="<%= product.title %>"
+  data-slug="<%= product.slug %>"
+  data-price="<%= product.price %>"
+  data-install-price="<%= product.installPrice %>"
+  data-image="<%= product.image %>"
+  data-brand="<%= product.brand.name %>"
+  data-description="<%= product.description || 'Тихая инверторная модель для квартиры, дома или офиса с профессиональным монтажом под ключ.' %>"
+  data-area="<%= product.roomArea %>"
+  data-power="<%= product.coolingPower || '' %>"
+  data-noise="<%= product.noiseLevel || '' %>"
+  data-energy="<%= product.energyClass || '' %>"
+>
   <% if (product.badge) { %><span class="badge"><%= product.badge %></span><% } %>
+  <button class="round-icon favorite-toggle" type="button" aria-label="В избранное"><span class="ui-icon icon-heart"></span></button>
   <a href="/product/<%= product.slug %>" class="product-media">
+    <span class="product-unit-visual" aria-hidden="true"></span>
     <img src="<%= product.image %>" alt="<%= product.title %>" loading="lazy">
   </a>
   <div class="product-body">
     <a href="/product/<%= product.slug %>" class="muted"><%= product.brand.name %></a>
     <h3><a href="/product/<%= product.slug %>"><%= product.title %></a></h3>
-    <p>Площадь: до <%= product.roomArea %> м²</p>
+    <% if (product.chips && product.chips.length) { %>
+      <p class="product-chips">
+        <span><%= product.roomArea %> м²</span>
+        <% product.chips.forEach((chip) => { %><span><%= chip %></span><% }) %>
+      </p>
+    <% } else { %>
+      <p>Площадь: до <%= product.roomArea %> м²</p>
+    <% } %>
     <div class="product-bottom">
       <strong><%= money(product.price) %></strong>
       <div class="card-actions">
-        <button class="round-icon compare-toggle" type="button" data-compare-id="<%= product.id %>" aria-label="Добавить к сравнению">♡</button>
+        <button
+          class="round-icon quick-view"
+          type="button"
+          data-quick-view
+          aria-label="Быстрый просмотр"
+        ><span class="ui-icon icon-eye"></span></button>
+        <button class="round-icon compare-toggle" type="button" data-compare-id="<%= product.id %>" aria-label="Добавить к сравнению"><span class="ui-icon icon-scale"></span></button>
         <button
           class="round-icon cart-add"
           type="button"
@@ -23,7 +53,7 @@
           data-image="<%= product.image %>"
           data-brand="<%= product.brand.name %>"
           aria-label="Добавить в корзину"
-        >⌑</button>
+        ><span class="ui-icon icon-cart"></span></button>
       </div>
     </div>
   </div>

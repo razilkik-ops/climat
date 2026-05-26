@@ -5,12 +5,47 @@ import { requireAdmin } from '../middleware.js';
 
 const router = Router();
 
+function slugify(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9а-яё]+/gi, '-')
+    .replace(/^-+|-+$/g, '') || `product-${Date.now()}`;
+}
+
+function splitFeatures(value) {
+  return String(value || '')
+    .split(/\r?\n|,/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function productPayload(body) {
+  return {
+    title: body.title,
+    slug: slugify(body.slug || body.title),
+    type: body.type || 'split',
+    roomArea: Number(body.roomArea),
+    coolingPower: Number(body.coolingPower),
+    energyClass: body.energyClass,
+    noiseLevel: Number(body.noiseLevel),
+    inverter: body.inverter === 'on',
+    wifi: body.wifi === 'on',
+    price: Number(body.price),
+    installPrice: Number(body.installPrice),
+    rating: Number(body.rating || 4.8),
+    stock: Number(body.stock || 0),
+    badge: body.badge || null,
+    description: body.description,
+    features: splitFeatures(body.features),
+    image: body.image || '/img/ac-white.svg',
+    brandId: Number(body.brandId)
+  };
+}
+
 router.get('/login', (req, res) => {
-  res.render('layout', {
-    view: 'admin/login',
-    title: 'Вход в админку',
-    error: null
-  });
+  res.redirect('/login');
 });
 
 router.post('/login', async (req, res, next) => {
@@ -59,7 +94,7 @@ router.get('/', async (req, res, next) => {
 
     res.render('layout', {
       view: 'admin/dashboard',
-      title: 'CRM',
+      title: 'Админка',
       stats: { leadsCount, newLeads, ordersCount, paidOrders, productsCount },
       recentLeads,
       recentOrders
@@ -71,16 +106,78 @@ router.get('/', async (req, res, next) => {
 
 router.get('/products', async (req, res, next) => {
   try {
-    const products = await prisma.product.findMany({
-      orderBy: { createdAt: 'desc' },
-      include: { brand: true }
-    });
+    const [products, brands] = await Promise.all([
+      prisma.product.findMany({
+        orderBy: { createdAt: 'desc' },
+        include: { brand: true }
+      }),
+      prisma.brand.findMany({ orderBy: { name: 'asc' } })
+    ]);
 
     res.render('layout', {
       view: 'admin/products',
       title: 'Товары',
-      products
+      products,
+      brands,
+      product: null,
+      mode: 'create'
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/products', async (req, res, next) => {
+  try {
+    await prisma.product.create({ data: productPayload(req.body) });
+    res.redirect('/admin/products');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/products/:id/edit', async (req, res, next) => {
+  try {
+    const [product, products, brands] = await Promise.all([
+      prisma.product.findUnique({ where: { id: Number(req.params.id) }, include: { brand: true } }),
+      prisma.product.findMany({ orderBy: { createdAt: 'desc' }, include: { brand: true } }),
+      prisma.brand.findMany({ orderBy: { name: 'asc' } })
+    ]);
+
+    if (!product) {
+      res.status(404).render('layout', { view: 'pages/not-found', title: 'Товар не найден' });
+      return;
+    }
+
+    res.render('layout', {
+      view: 'admin/products',
+      title: 'Редактирование товара',
+      products,
+      brands,
+      product,
+      mode: 'edit'
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch('/products/:id', async (req, res, next) => {
+  try {
+    await prisma.product.update({
+      where: { id: Number(req.params.id) },
+      data: productPayload(req.body)
+    });
+    res.redirect('/admin/products');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/products/:id', async (req, res, next) => {
+  try {
+    await prisma.product.delete({ where: { id: Number(req.params.id) } });
+    res.redirect('/admin/products');
   } catch (error) {
     next(error);
   }
@@ -132,4 +229,3 @@ router.get('/orders', async (req, res, next) => {
 });
 
 export default router;
-

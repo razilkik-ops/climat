@@ -1,0 +1,14 @@
+<section class="admin-login">
+  <div class="smart-form auth-form">
+    <p class="eyebrow">Личный кабинет</p>
+    <h1>Здравствуйте, <%= currentUser.name %></h1>
+    <div class="account-summary">
+      <div><span>Email</span><strong><%= currentUser.email %></strong></div>
+      <div><span>Телефон</span><strong><%= currentUser.phone || 'Не указан' %></strong></div>
+    </div>
+    <div class="hero-actions">
+      <a class="button button-primary" href="/catalog">Перейти в каталог <span>→</span></a>
+      <form action="/logout" method="post"><button class="button button-outline" type="submit">Выйти</button></form>
+    </div>
+  </div>
+</section>
