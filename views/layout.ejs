@@ -1,26 +1,11 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title ? `${title} | Minsk Climate` : 'Minsk Climate' %></title>
     <meta name="description" content="Продажа, подбор и установка кондиционеров под ключ в Минске. Каталог, квиз, расчет стоимости, гарантия и сервис.">
-    <meta name="color-scheme" content="light dark">
-    <script>
-      (() => {
-        const storedTheme = (() => {
-          try {
-            return localStorage.getItem('climat-theme');
-          } catch {
-            return null;
-          }
-        })();
-        const systemTheme = window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        const theme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : systemTheme;
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.style.colorScheme = theme;
-      })();
-    </script>
+    <meta name="color-scheme" content="dark">
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="stylesheet" href="/css/styles.css">
   </head>
