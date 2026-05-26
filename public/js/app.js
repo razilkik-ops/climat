@@ -1,5 +1,61 @@
 const formatMoney = (value) => new Intl.NumberFormat('ru-BY').format(value) + ' BYN';
 
+const themeStorageKey = 'climat-theme';
+const themeToggles = document.querySelectorAll('[data-theme-toggle]');
+const themeMedia = window.matchMedia?.('(prefers-color-scheme: dark)');
+
+function getStoredTheme() {
+  try {
+    const storedTheme = localStorage.getItem(themeStorageKey);
+    return storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : null;
+  } catch {
+    return null;
+  }
+}
+
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.documentElement.style.colorScheme = theme;
+
+  themeToggles.forEach((themeToggle) => {
+    const isDark = theme === 'dark';
+    themeToggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    themeToggle.setAttribute('aria-label', isDark ? 'Включить светлую тему' : 'Включить темную тему');
+  });
+}
+
+function storeTheme(theme) {
+  try {
+    localStorage.setItem(themeStorageKey, theme);
+  } catch {
+    return false;
+  }
+
+  return true;
+}
+
+applyTheme(getStoredTheme() || (themeMedia?.matches ? 'dark' : 'light'));
+
+themeToggles.forEach((themeToggle) => {
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    storeTheme(nextTheme);
+    applyTheme(nextTheme);
+  });
+});
+
+if (themeMedia) {
+  const syncSystemTheme = (event) => {
+    if (!getStoredTheme()) applyTheme(event.matches ? 'dark' : 'light');
+  };
+
+  if (themeMedia.addEventListener) {
+    themeMedia.addEventListener('change', syncSystemTheme);
+  } else {
+    themeMedia.addListener(syncSystemTheme);
+  }
+}
+
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const menu = document.querySelector('[data-menu]');
 if (menuToggle && menu) {
